@@ -3,9 +3,9 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,160" last-zoom="1"
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,11" last-zoom="1"
 	 default-owner="postgres">
-<database name="clinics">
+<database name="clinics" sql-disabled="true">
 </database>
 
 <schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
@@ -68,7 +68,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 	<constraint name="ck_contracts_first_fee" type="ck-constr" table="billing.contracts">
-			<expression><![CDATA[first_fee => 0]]></expression>
+			<expression><![CDATA[first_fee >= 0]]></expression>
 	</constraint>
 	<constraint name="ck_contracts_monthly_fee" type="ck-constr" table="billing.contracts">
 			<expression><![CDATA[monthly_fee > 0]]></expression>
@@ -76,6 +76,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="ck_contracts_ended_on" type="ck-constr" table="billing.contracts">
 			<expression><![CDATA[started_on <= ended_on]]></expression>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="9"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_contracts_clinics" index="4"/>
+	</customidxs>
 </table>
 
 <table name="accruals">
