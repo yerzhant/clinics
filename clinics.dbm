@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,318" last-zoom="1"
+	 default-owner="postgres">
+<database name="doctor">
+</database>
+
+<schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="billing" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="clinics">
+	<schema name="billing"/>
+	<role name="postgres"/>
+	<position x="480" y="43"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<constraint name="pk_clinics" type="pk-constr" table="billing.clinics">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uq_clinics_name" type="uq-constr" table="billing.clinics">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="contracts">
+	<schema name="billing"/>
+	<role name="postgres"/>
+	<position x="820" y="37"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="accrued" not-null="true" default-value="0">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="next_accrual_on" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="started_on" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="first_fee" not-null="true">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="monthly_fee">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="number">
+		<type name="text"/>
+	</column>
+	<column name="ended_on">
+		<type name="date"/>
+	</column>
+	<column name="paid" not-null="true" default-value="0">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<constraint name="pk_contracts" type="pk-constr" table="billing.contracts">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_contracts_first_fee" type="ck-constr" table="billing.contracts">
+			<expression><![CDATA[first_fee => 0]]></expression>
+	</constraint>
+	<constraint name="ck_contracts_monthly_fee" type="ck-constr" table="billing.contracts">
+			<expression><![CDATA[monthly_fee > 0]]></expression>
+	</constraint>
+	<constraint name="ck_contracts_ended_on" type="ck-constr" table="billing.contracts">
+			<expression><![CDATA[started_on <= ended_on]]></expression>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="8"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_contracts_clinics" index="4"/>
+	</customidxs>
+</table>
+
+<table name="accruals">
+	<schema name="billing"/>
+	<role name="postgres"/>
+	<position x="1200" y="40"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="accrued_on" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="amount" not-null="true">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<constraint name="pk_accruals" type="pk-constr" table="billing.accruals">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_accruals_amount" type="ck-constr" table="billing.accruals">
+			<expression><![CDATA[amount > 0]]></expression>
+	</constraint>
+</table>
+
+<table name="payments">
+	<schema name="billing"/>
+	<role name="postgres"/>
+	<position x="1220" y="180"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="payed_on" not-null="true">
+		<type name="timestamp"/>
+	</column>
+	<column name="amount" not-null="true">
+		<type name="numeric" length="10" precision="2"/>
+	</column>
+	<column name="doc_number">
+		<type name="text"/>
+	</column>
+	<constraint name="pk_payments" type="pk-constr" table="billing.payments">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_payments_amount" type="ck-constr" table="billing.payments">
+			<expression><![CDATA[amount > 0]]></expression>
+	</constraint>
+</table>
+
+<table name="payment_types">
+	<schema name="billing"/>
+	<role name="postgres"/>
+	<position x="960" y="220"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="code">
+		<type name="text"/>
+	</column>
+	<constraint name="pk_payment_types" type="pk-constr" table="billing.payment_types">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uq_payment_types_name" type="uq-constr" table="billing.payment_types">
+		<columns names="name" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uq_payment_types_code" type="uq-constr" table="billing.payment_types">
+		<columns names="code" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<schema name="core" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="staff">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="320" y="863"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="last_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="first_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="surname">
+		<type name="text"/>
+	</column>
+	<constraint name="pk_doctors" type="pk-constr" table="core.staff">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="users_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_staff_users" index="1"/>
+		<object name="uq_staff" index="2"/>
+	</customidxs>
+</table>
+
+<schema name="sequrity" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="users">
+	<schema name="sequrity"/>
+	<role name="postgres"/>
+	<position x="340" y="1123"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="is_locked" not-null="true" default-value="false">
+		<type name="bool"/>
+	</column>
+	<column name="is_admin" not-null="true" default-value="false">
+		<type name="bool"/>
+	</column>
+	<constraint name="pk_users" type="pk-constr" table="sequrity.users">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uq_users_email" type="uq-constr" table="sequrity.users">
+		<columns names="email" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="positions">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="220" y="643"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="role" not-null="true">
+		<type name="core.role" dimension="1"/>
+	</column>
+	<constraint name="pk_positions" type="pk-constr" table="core.positions">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_positions_clinics" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="doctors_has_one_users" type="rel11"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="{dt}_pk" uq-pattern="uq_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#55aaff"
+	 src-table="sequrity.users"
+	 dst-table="core.staff"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<table name="contact_types">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="640" y="483"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<constraint name="pk_contract_types" type="pk-constr" table="core.contact_types">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_contact_types_clinics" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="clinics_has_many_contact_types" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="core.contact_types"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="payment_types_has_many_payments" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.payment_types"
+	 dst-table="billing.payments"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="contracts_has_many_payments" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.contracts"
+	 dst-table="billing.payments"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="contracts_has_many_accruals" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.contracts"
+	 dst-table="billing.accruals"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="clinics_has_many_contracts" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="billing.contracts"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="clinics_has_many_positions" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="core.positions"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<constraint name="uq_positions_clinic_id_name" type="uq-constr" table="core.positions">
+	<columns names="name,clinics_id" ref-type="src-columns"/>
+</constraint>
+
+<relationship name="clinics_has_many_doctors" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="core.staff"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="positions_has_many_doctors" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.positions"
+	 dst-table="core.staff"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<table name="contacts">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="480" y="643"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="val" not-null="true">
+		<type name="text"/>
+	</column>
+	<constraint name="pk_contacts" type="pk-constr" table="core.contacts">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="contact_types_id" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_contacts_contact_types" index="0"/>
+	</customidxs>
+</table>
+
+<constraint name="uk_contact_types_name" type="uq-constr" table="core.contact_types">
+	<columns names="name,clinics_id" ref-type="src-columns"/>
+</constraint>
+
+<usertype name="doc_type" configuration="enumeration">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<enumeration values="id,passport"/>
+</usertype>
+
+<relationship name="contact_types_has_many_contacts" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.contact_types"
+	 dst-table="core.contacts"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<table name="paitients">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="860" y="483"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="last_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="first_name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="birth_date" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="surname">
+		<type name="text"/>
+	</column>
+	<column name="doc_number">
+		<type name="text"/>
+	</column>
+	<column name="doc_type">
+		<type name="core.doc_type" precision="32661"/>
+	</column>
+	<constraint name="pk_paitients" type="pk-constr" table="core.paitients">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_paitients_clinics" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="clinics_has_many_paitients" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="core.paitients"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="many_clinics_has_many_contacts" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
+	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
+	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
+	 pk-col-pattern="id"
+	 custom-color="#00ff00"
+	 src-table="billing.clinics"
+	 dst-table="core.contacts"
+	 src-required="false" dst-required="false"
+	 table-name="clinics_contacts"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="many_doctors_has_many_contacts" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
+	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
+	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
+	 pk-col-pattern="id"
+	 custom-color="#00ff00"
+	 src-table="core.staff"
+	 dst-table="core.contacts"
+	 src-required="false" dst-required="false"
+	 table-name="doctors_contacts"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="many_paitients_has_many_contacts" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
+	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
+	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
+	 pk-col-pattern="id"
+	 custom-color="#00ff00"
+	 src-table="core.paitients"
+	 dst-table="core.contacts"
+	 src-required="false" dst-required="false"
+	 table-name="paitients_contacts"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<table name="services">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="680" y="883"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="price">
+		<type name="decimal" length="10" precision="2"/>
+	</column>
+	<constraint name="pk_services" type="pk-constr" table="core.services">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="staff_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_services_staff" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="staff_has_many_services" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.staff"
+	 dst-table="core.services"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<table name="rendered_services">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="1060" y="883"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="price">
+		<type name="decimal" length="10" precision="2"/>
+	</column>
+	<column name="quantity">
+		<type name="smallint"/>
+	</column>
+	<constraint name="pk_rendered_services" type="pk-constr" table="core.rendered_services">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_rendered_services_price" type="ck-constr" table="core.rendered_services">
+			<expression><![CDATA[price > 0]]></expression>
+	</constraint>
+	<constraint name="ck_renderd_services_quantity" type="ck-constr" table="core.rendered_services">
+			<expression><![CDATA[quantity > 0]]></expression>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="services_id" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_rendered_services_services" index="1"/>
+	</customidxs>
+</table>
+
+<constraint name="uk_services_name" type="uq-constr" table="core.services">
+	<columns names="staff_id,name" ref-type="src-columns"/>
+</constraint>
+
+<relationship name="services_has_many_rendered_services" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.services"
+	 dst-table="core.rendered_services"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<table name="doctors_paitients">
+	<schema name="core"/>
+	<position x="740" y="743"/>
+	<column name="assigned_on" not-null="true">
+		<type name="timestamp"/>
+	</column>
+	<column name="serviced_on">
+		<type name="timestamp"/>
+	</column>
+	<column name="is_paid" not-null="true" default-value="false">
+		<type name="bool"/>
+	</column>
+</table>
+
+<relationship name="staff_has_many_doctors_paitients" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.staff"
+	 dst-table="core.doctors_paitients"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="paitients_has_many_doctors_paitients" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.paitients"
+	 dst-table="core.doctors_paitients"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="doctors_paitients_has_many_rendered_services" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.doctors_paitients"
+	 dst-table="core.rendered_services"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<constraint name="uk_rendered_services_staff_id_paitients_id_services_id" type="uq-constr" table="core.rendered_services">
+	<columns names="services_id,doctors_paitients_staff_id,doctors_paitients_paitients_id" ref-type="src-columns"/>
+</constraint>
+
+<table name="medicines">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="1200" y="520"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="price">
+		<type name="decimal" length="10" precision="2"/>
+	</column>
+	<constraint name="pk_medicines" type="pk-constr" table="core.medicines">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_medicines_price" type="ck-constr" table="core.medicines">
+			<expression><![CDATA[price > 0]]></expression>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_medicines_clinics" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="clinics_has_many_medicines" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="core.medicines"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<constraint name="uk_medicines_name" type="uq-constr" table="core.medicines">
+	<columns names="clinics_id,name" ref-type="src-columns"/>
+</constraint>
+
+<table name="supplied_medicines">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="1160" y="740"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="price">
+		<type name="decimal" length="10" precision="2"/>
+	</column>
+	<column name="quantity">
+		<type name="smallint"/>
+	</column>
+	<constraint name="pk_supplied_medicines" type="pk-constr" table="core.supplied_medicines">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_supplied_medicines_price" type="ck-constr" table="core.supplied_medicines">
+			<expression><![CDATA[price > 0]]></expression>
+	</constraint>
+	<constraint name="ck_supplied_medicines_quantity" type="ck-constr" table="core.supplied_medicines">
+			<expression><![CDATA[quantity > 0]]></expression>
+	</constraint>
+</table>
+
+<relationship name="medicines_has_many_supplied_medicines" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.medicines"
+	 dst-table="core.supplied_medicines"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="doctors_paitients_has_many_supplied_medicines" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.doctors_paitients"
+	 dst-table="core.supplied_medicines"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<usertype name="role" configuration="enumeration">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<enumeration values="admin,doctor,accountant,receptionist"/>
+</usertype>
+
+<table name="schedules">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="888" y="864"/>
+	<column name="id">
+		<type name="serial"/>
+	</column>
+	<column name="day" not-null="true">
+		<type name="core.week_day"/>
+	</column>
+</table>
+
+<domain name="week_day" not-null="true">
+	<schema name="core"/>
+	<role name="postgres"/>
+		<type name="smallint"/>
+	<expression><![CDATA[value between 1 and 7]]></expression>
+</domain>
+
+</dbmodel>
