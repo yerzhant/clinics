@@ -3,9 +3,9 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,318" last-zoom="1"
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,160" last-zoom="1"
 	 default-owner="postgres">
-<database name="doctor">
+<database name="clinics">
 </database>
 
 <schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
@@ -28,7 +28,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="pk_clinics" type="pk-constr" table="billing.clinics">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="uq_clinics_name" type="uq-constr" table="billing.clinics">
+	<constraint name="uk_clinics_name" type="uq-constr" table="billing.clinics">
 		<columns names="name" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -36,7 +36,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="contracts">
 	<schema name="billing"/>
 	<role name="postgres"/>
-	<position x="820" y="37"/>
+	<position x="820" y="38"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -76,14 +76,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="ck_contracts_ended_on" type="ck-constr" table="billing.contracts">
 			<expression><![CDATA[started_on <= ended_on]]></expression>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="clinics_id" index="8"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="fk_contracts_clinics" index="4"/>
-	</customidxs>
 </table>
 
 <table name="accruals">
@@ -134,7 +126,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="payment_types">
 	<schema name="billing"/>
 	<role name="postgres"/>
-	<position x="960" y="220"/>
+	<position x="961" y="220"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -147,10 +139,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="pk_payment_types" type="pk-constr" table="billing.payment_types">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="uq_payment_types_name" type="uq-constr" table="billing.payment_types">
+	<constraint name="uk_payment_types_name" type="uq-constr" table="billing.payment_types">
 		<columns names="name" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="uq_payment_types_code" type="uq-constr" table="billing.payment_types">
+	<constraint name="uk_payment_types_code" type="uq-constr" table="billing.payment_types">
 		<columns names="code" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -162,7 +154,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="staff">
 	<schema name="core"/>
 	<role name="postgres"/>
-	<position x="320" y="863"/>
+	<position x="320" y="864"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -184,8 +176,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 
 	<customidxs object-type="constraint">
+		<object name="fk_staff_clinics" index="3"/>
+		<object name="fk_staff_positions" index="4"/>
 		<object name="fk_staff_users" index="1"/>
-		<object name="uq_staff" index="2"/>
+		<object name="uk_staff" index="2"/>
 	</customidxs>
 </table>
 
@@ -196,7 +190,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="users">
 	<schema name="sequrity"/>
 	<role name="postgres"/>
-	<position x="340" y="1123"/>
+	<position x="341" y="1187"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -215,40 +209,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="pk_users" type="pk-constr" table="sequrity.users">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="uq_users_email" type="uq-constr" table="sequrity.users">
+	<constraint name="uk_users_email" type="uq-constr" table="sequrity.users">
 		<columns names="email" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="positions">
-	<schema name="core"/>
-	<role name="postgres"/>
-	<position x="220" y="643"/>
-	<column name="id" not-null="true">
-		<type name="serial"/>
-	</column>
-	<column name="name" not-null="true">
-		<type name="text"/>
-	</column>
-	<column name="role" not-null="true">
-		<type name="core.role" dimension="1"/>
-	</column>
-	<constraint name="pk_positions" type="pk-constr" table="core.positions">
-		<columns names="id" ref-type="src-columns"/>
-	</constraint>
-
-	<customidxs object-type="column">
-		<object name="clinics_id" index="2"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="fk_positions_clinics" index="1"/>
-	</customidxs>
-</table>
-
 <relationship name="doctors_has_one_users" type="rel11"
 	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="{dt}_pk" uq-pattern="uq_{dt}"
+	 pk-pattern="{dt}_pk" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#55aaff"
 	 src-table="sequrity.users"
@@ -335,38 +303,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<relationship name="clinics_has_many_positions" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
-	 src-fk-pattern="fk_{dt}_{st}"
-	 custom-color="#aa55ff"
-	 src-table="billing.clinics"
-	 dst-table="core.positions"
-	 src-required="true" dst-required="false"
-	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
-
-<constraint name="uq_positions_clinic_id_name" type="uq-constr" table="core.positions">
-	<columns names="name,clinics_id" ref-type="src-columns"/>
-</constraint>
-
 <relationship name="clinics_has_many_doctors" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="billing.clinics"
-	 dst-table="core.staff"
-	 src-required="true" dst-required="false"
-	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
-
-<relationship name="positions_has_many_doctors" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
-	 src-fk-pattern="fk_{dt}_{st}"
-	 custom-color="#aa55ff"
-	 src-table="core.positions"
 	 dst-table="core.staff"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
@@ -416,10 +358,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<table name="paitients">
+<table name="patients">
 	<schema name="core"/>
 	<role name="postgres"/>
-	<position x="860" y="483"/>
+	<position x="859" y="483"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -441,7 +383,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="doc_type">
 		<type name="core.doc_type" precision="32661"/>
 	</column>
-	<constraint name="pk_paitients" type="pk-constr" table="core.paitients">
+	<constraint name="pk_patients" type="pk-constr" table="core.patients">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
@@ -450,7 +392,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_paitients_clinics" index="0"/>
+		<object name="fk_patients_clinics" index="1"/>
 	</customidxs>
 </table>
 
@@ -460,7 +402,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="billing.clinics"
-	 dst-table="core.paitients"
+	 dst-table="core.patients"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
@@ -497,7 +439,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
 	 pk-col-pattern="id"
 	 custom-color="#00ff00"
-	 src-table="core.paitients"
+	 src-table="core.patients"
 	 dst-table="core.contacts"
 	 src-required="false" dst-required="false"
 	 table-name="paitients_contacts"
@@ -588,9 +530,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<table name="doctors_paitients">
+<table name="doctors_patients">
 	<schema name="core"/>
-	<position x="740" y="743"/>
+	<position x="741" y="743"/>
 	<column name="assigned_on" not-null="true">
 		<type name="timestamp"/>
 	</column>
@@ -600,6 +542,17 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="is_paid" not-null="true" default-value="false">
 		<type name="bool"/>
 	</column>
+
+	<customidxs object-type="column">
+		<object name="patients_id" index="4"/>
+		<object name="staff_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_doctors_patients_patients" index="2"/>
+		<object name="fk_doctors_patients_staff" index="1"/>
+		<object name="pk_doctors_patients" index="0"/>
+	</customidxs>
 </table>
 
 <relationship name="staff_has_many_doctors_paitients" type="rel1n"
@@ -608,7 +561,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="core.staff"
-	 dst-table="core.doctors_paitients"
+	 dst-table="core.doctors_patients"
 	 src-required="true" dst-required="false"
 	 identifier="true"
 
@@ -620,8 +573,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
-	 src-table="core.paitients"
-	 dst-table="core.doctors_paitients"
+	 src-table="core.patients"
+	 dst-table="core.doctors_patients"
 	 src-required="true" dst-required="false"
 	 identifier="true"
 
@@ -633,15 +586,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
-	 src-table="core.doctors_paitients"
+	 src-table="core.doctors_patients"
 	 dst-table="core.rendered_services"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
-
-<constraint name="uk_rendered_services_staff_id_paitients_id_services_id" type="uq-constr" table="core.rendered_services">
-	<columns names="services_id,doctors_paitients_staff_id,doctors_paitients_paitients_id" ref-type="src-columns"/>
-</constraint>
 
 <table name="medicines">
 	<schema name="core"/>
@@ -690,7 +639,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="supplied_medicines">
 	<schema name="core"/>
 	<role name="postgres"/>
-	<position x="1160" y="740"/>
+	<position x="1160" y="736"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -727,7 +676,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
-	 src-table="core.doctors_paitients"
+	 src-table="core.doctors_patients"
 	 dst-table="core.supplied_medicines"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
@@ -739,23 +688,101 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<enumeration values="admin,doctor,accountant,receptionist"/>
 </usertype>
 
-<table name="schedules">
-	<schema name="core"/>
-	<role name="postgres"/>
-	<position x="888" y="864"/>
-	<column name="id">
-		<type name="serial"/>
-	</column>
-	<column name="day" not-null="true">
-		<type name="core.week_day"/>
-	</column>
-</table>
-
 <domain name="week_day" not-null="true">
 	<schema name="core"/>
 	<role name="postgres"/>
 		<type name="smallint"/>
 	<expression><![CDATA[value between 1 and 7]]></expression>
 </domain>
+
+<table name="positions">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="220" y="643"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="name" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="role" not-null="true">
+		<type name="core.role" dimension="1" precision="32661"/>
+	</column>
+	<constraint name="pk_positions" type="pk-constr" table="core.positions">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinics_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_positions_clinics" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="positions_has_many_doctors" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.positions"
+	 dst-table="core.staff"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="clinics_has_many_positions" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="billing.clinics"
+	 dst-table="core.positions"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<constraint name="uk_positions_clinic_id_name" type="uq-constr" table="core.positions">
+	<columns names="name,clinics_id" ref-type="src-columns"/>
+</constraint>
+
+<table name="schedules">
+	<schema name="core"/>
+	<role name="postgres"/>
+	<position x="620" y="1043"/>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<column name="day" not-null="true">
+		<type name="core.week_day" precision="32661"/>
+	</column>
+	<constraint name="pk_schedules" type="pk-constr" table="core.schedules">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="staff_id" index="2"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_schedules_staff" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="staff_has_many_schedules" type="rel1n"
+	 src-col-pattern="{st}_{sc}"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.staff"
+	 dst-table="core.schedules"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<constraint name="uk_patients_clinics_doc_type_doc_number" type="uq-constr" table="core.patients">
+	<columns names="clinics_id,doc_number,doc_type" ref-type="src-columns"/>
+</constraint>
 
 </dbmodel>
