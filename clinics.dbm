@@ -3,8 +3,13 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,11" last-zoom="1"
-	 default-owner="postgres">
+<dbmodel pgmodeler-ver="0.8.1" last-position="1,635" last-zoom="1">
+<role name="clinics_web"
+      login="true"
+      password="xxx"
+      sql-disabled="true">
+</role>
+
 <database name="clinics" sql-disabled="true">
 </database>
 
@@ -12,13 +17,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </schema>
 
 <schema name="billing" rect-visible="true" fill-color="#e1e1e1">
-	<role name="postgres"/>
 </schema>
 
 <table name="clinics">
 	<schema name="billing"/>
-	<role name="postgres"/>
-	<position x="480" y="43"/>
+	<position x="483" y="49"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -35,8 +38,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="contracts">
 	<schema name="billing"/>
-	<role name="postgres"/>
-	<position x="820" y="38"/>
+	<position x="820" y="40"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -88,8 +90,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="accruals">
 	<schema name="billing"/>
-	<role name="postgres"/>
-	<position x="1200" y="40"/>
+	<position x="1200" y="42"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -105,11 +106,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="ck_accruals_amount" type="ck-constr" table="billing.accruals">
 			<expression><![CDATA[amount > 0]]></expression>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="contracts_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_accruals_contracts" index="2"/>
+	</customidxs>
 </table>
 
 <table name="payments">
 	<schema name="billing"/>
-	<role name="postgres"/>
 	<position x="1220" y="180"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -129,12 +137,21 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="ck_payments_amount" type="ck-constr" table="billing.payments">
 			<expression><![CDATA[amount > 0]]></expression>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="contracts_id" index="5"/>
+		<object name="payment_types_id" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_payments_contracts" index="3"/>
+		<object name="fk_payments_payment_types" index="2"/>
+	</customidxs>
 </table>
 
 <table name="payment_types">
 	<schema name="billing"/>
-	<role name="postgres"/>
-	<position x="961" y="220"/>
+	<position x="961" y="223"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -156,12 +173,10 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <schema name="core" rect-visible="true" fill-color="#e1e1e1">
-	<role name="postgres"/>
 </schema>
 
 <table name="staff">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<position x="320" y="864"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -180,6 +195,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
+		<object name="clinics_id" index="5"/>
+		<object name="positions_id" index="6"/>
 		<object name="users_id" index="1"/>
 	</customidxs>
 
@@ -192,13 +209,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <schema name="sequrity" rect-visible="true" fill-color="#e1e1e1">
-	<role name="postgres"/>
 </schema>
 
 <table name="users">
 	<schema name="sequrity"/>
-	<role name="postgres"/>
-	<position x="341" y="1187"/>
+	<position x="341" y="1186"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -235,7 +250,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="contact_types">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<position x="640" y="483"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -324,12 +338,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="contacts">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<position x="480" y="643"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
-	<column name="val" not-null="true">
+	<column name="value" not-null="true">
 		<type name="text"/>
 	</column>
 	<constraint name="pk_contacts" type="pk-constr" table="core.contacts">
@@ -351,7 +364,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <usertype name="doc_type" configuration="enumeration">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<enumeration values="id,passport"/>
 </usertype>
 
@@ -368,7 +380,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="patients">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<position x="859" y="483"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -456,7 +467,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="services">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<position x="680" y="883"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -493,7 +503,6 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="rendered_services">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<position x="1060" y="883"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -515,10 +524,13 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
+		<object name="doctors_patients_patients_id" index="5"/>
+		<object name="doctors_patients_staff_id" index="4"/>
 		<object name="services_id" index="1"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
+		<object name="fk_rendered_services_doctors_patients" index="4"/>
 		<object name="fk_rendered_services_services" index="1"/>
 	</customidxs>
 </table>
@@ -602,8 +614,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="medicines">
 	<schema name="core"/>
-	<role name="postgres"/>
-	<position x="1200" y="520"/>
+	<position x="1199" y="520"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -646,8 +657,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="supplied_medicines">
 	<schema name="core"/>
-	<role name="postgres"/>
-	<position x="1160" y="736"/>
+	<position x="1160" y="737"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -666,6 +676,17 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="ck_supplied_medicines_quantity" type="ck-constr" table="core.supplied_medicines">
 			<expression><![CDATA[quantity > 0]]></expression>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="doctors_patients_patients_id" index="5"/>
+		<object name="doctors_patients_staff_id" index="4"/>
+		<object name="medicines_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_supplied_medicines_doctors_patients" index="4"/>
+		<object name="fk_supplied_medicines_medicines" index="3"/>
+	</customidxs>
 </table>
 
 <relationship name="medicines_has_many_supplied_medicines" type="rel1n"
@@ -692,21 +713,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <usertype name="role" configuration="enumeration">
 	<schema name="core"/>
-	<role name="postgres"/>
 	<enumeration values="admin,doctor,accountant,receptionist"/>
 </usertype>
 
 <domain name="week_day" not-null="true">
 	<schema name="core"/>
-	<role name="postgres"/>
 		<type name="smallint"/>
 	<expression><![CDATA[value between 1 and 7]]></expression>
 </domain>
 
 <table name="positions">
 	<schema name="core"/>
-	<role name="postgres"/>
-	<position x="220" y="643"/>
+	<position x="220" y="644"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -757,8 +775,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="schedules">
 	<schema name="core"/>
-	<role name="postgres"/>
-	<position x="620" y="1043"/>
+	<position x="620" y="1044"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -793,4 +810,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="clinics_id,doc_number,doc_type" ref-type="src-columns"/>
 </constraint>
 
+<permission>
+	<object name="core" type="schema"/>
+	<roles names="clinics_web"/>
+	<privileges usage="true"/>
+</permission>
 </dbmodel>
