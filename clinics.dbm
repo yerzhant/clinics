@@ -3,14 +3,18 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="1,635" last-zoom="1">
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,259" last-zoom="1">
 <role name="clinics_web"
       login="true"
       password="xxx"
       sql-disabled="true">
 </role>
 
-<database name="clinics" sql-disabled="true">
+<database name="clinics" sql-disabled="true" append-at-eod="true">
+	<appended-sql><![CDATA[grant select, insert, update, delete on all tables in schema core to clinics_web;
+grant usage on all sequences in schema core to clinics_web;
+
+insert into clinics(name) values('abc');]]></appended-sql>
 </database>
 
 <schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
@@ -21,7 +25,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="clinics">
 	<schema name="billing"/>
-	<position x="483" y="49"/>
+	<position x="480" y="40"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -80,7 +84,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinics_id" index="9"/>
+		<object name="clinic_id" index="9"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -90,7 +94,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="accruals">
 	<schema name="billing"/>
-	<position x="1200" y="42"/>
+	<position x="1200" y="60"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -108,7 +112,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="contracts_id" index="3"/>
+		<object name="contract_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -139,8 +143,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="contracts_id" index="5"/>
-		<object name="payment_types_id" index="4"/>
+		<object name="contract_id" index="5"/>
+		<object name="payment_type_id" index="4"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -151,7 +155,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="payment_types">
 	<schema name="billing"/>
-	<position x="961" y="223"/>
+	<position x="960" y="220"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -177,7 +181,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="staff">
 	<schema name="core"/>
-	<position x="320" y="864"/>
+	<position x="320" y="860"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -195,9 +199,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinics_id" index="5"/>
-		<object name="positions_id" index="6"/>
-		<object name="users_id" index="1"/>
+		<object name="clinic_id" index="5"/>
+		<object name="position_id" index="6"/>
+		<object name="user_id" index="4"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -213,7 +217,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="users">
 	<schema name="sequrity"/>
-	<position x="341" y="1186"/>
+	<position x="340" y="1180"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -238,7 +242,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <relationship name="doctors_has_one_users" type="rel11"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="user_id"
 	 pk-pattern="{dt}_pk" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#55aaff"
@@ -250,7 +254,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="contact_types">
 	<schema name="core"/>
-	<position x="640" y="483"/>
+	<position x="640" y="480"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -262,7 +266,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinics_id" index="2"/>
+		<object name="clinic_id" index="2"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -271,7 +275,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <relationship name="clinics_has_many_contact_types" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="clinic_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -282,7 +286,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <relationship name="payment_types_has_many_payments" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="payment_type_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -290,10 +294,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="billing.payments"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
+	del-action="NO ACTION">
+	<label ref-type="dst-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
 
 <relationship name="contracts_has_many_payments" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="contract_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -304,7 +312,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <relationship name="contracts_has_many_accruals" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="contract_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -315,7 +323,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <relationship name="clinics_has_many_contracts" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="clinic_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -326,7 +334,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <relationship name="clinics_has_many_doctors" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="clinic_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -338,7 +346,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="contacts">
 	<schema name="core"/>
-	<position x="480" y="643"/>
+	<position x="480" y="640"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -350,7 +358,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="contact_types_id" index="2"/>
+		<object name="contact_type_id" index="2"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -359,7 +367,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <constraint name="uk_contact_types_name" type="uq-constr" table="core.contact_types">
-	<columns names="name,clinics_id" ref-type="src-columns"/>
+	<columns names="name,clinic_id" ref-type="src-columns"/>
 </constraint>
 
 <usertype name="doc_type" configuration="enumeration">
@@ -368,7 +376,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </usertype>
 
 <relationship name="contact_types_has_many_contacts" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="contact_type_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -380,7 +388,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="patients">
 	<schema name="core"/>
-	<position x="859" y="483"/>
+	<position x="860" y="480"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -407,7 +415,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinics_id" index="5"/>
+		<object name="clinic_id" index="7"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -416,7 +424,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <relationship name="clinics_has_many_paitients" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="clinic_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -467,7 +475,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="services">
 	<schema name="core"/>
-	<position x="680" y="883"/>
+	<position x="680" y="880"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -503,7 +511,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="rendered_services">
 	<schema name="core"/>
-	<position x="1060" y="883"/>
+	<position x="1060" y="880"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -524,9 +532,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="doctors_patients_patients_id" index="5"/>
+		<object name="doctors_patients_patient_id" index="5"/>
 		<object name="doctors_patients_staff_id" index="4"/>
-		<object name="services_id" index="1"/>
+		<object name="service_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -540,7 +548,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </constraint>
 
 <relationship name="services_has_many_rendered_services" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="service_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -552,7 +560,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="doctors_patients">
 	<schema name="core"/>
-	<position x="741" y="743"/>
+	<position x="740" y="740"/>
 	<column name="assigned_on" not-null="true">
 		<type name="timestamp"/>
 	</column>
@@ -564,7 +572,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 
 	<customidxs object-type="column">
-		<object name="patients_id" index="4"/>
+		<object name="patient_id" index="4"/>
 		<object name="staff_id" index="3"/>
 	</customidxs>
 
@@ -589,7 +597,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <relationship name="paitients_has_many_doctors_paitients" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="patient_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -614,7 +622,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="medicines">
 	<schema name="core"/>
-	<position x="1199" y="520"/>
+	<position x="1200" y="520"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -632,7 +640,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinics_id" index="3"/>
+		<object name="clinic_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -641,7 +649,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <relationship name="clinics_has_many_medicines" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="clinic_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -652,12 +660,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <constraint name="uk_medicines_name" type="uq-constr" table="core.medicines">
-	<columns names="clinics_id,name" ref-type="src-columns"/>
+	<columns names="clinic_id,name" ref-type="src-columns"/>
 </constraint>
 
 <table name="supplied_medicines">
 	<schema name="core"/>
-	<position x="1160" y="737"/>
+	<position x="1140" y="720"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -678,9 +686,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="doctors_patients_patients_id" index="5"/>
+		<object name="doctors_patients_patient_id" index="5"/>
 		<object name="doctors_patients_staff_id" index="4"/>
-		<object name="medicines_id" index="3"/>
+		<object name="medicine_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -690,7 +698,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <relationship name="medicines_has_many_supplied_medicines" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="medicine_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -724,7 +732,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="positions">
 	<schema name="core"/>
-	<position x="220" y="644"/>
+	<position x="220" y="640"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -739,7 +747,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinics_id" index="3"/>
+		<object name="clinic_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
@@ -748,7 +756,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 </table>
 
 <relationship name="positions_has_many_doctors" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="position_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -759,7 +767,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <relationship name="clinics_has_many_positions" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
+	 src-col-pattern="clinic_id"
 	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
@@ -770,20 +778,29 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <constraint name="uk_positions_clinic_id_name" type="uq-constr" table="core.positions">
-	<columns names="name,clinics_id" ref-type="src-columns"/>
+	<columns names="name,clinic_id" ref-type="src-columns"/>
 </constraint>
 
 <table name="schedules">
 	<schema name="core"/>
-	<position x="620" y="1044"/>
+	<position x="620" y="1040"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
 	<column name="day" not-null="true">
 		<type name="core.week_day" precision="32661"/>
 	</column>
+	<column name="from_time">
+		<type name="time"/>
+	</column>
+	<column name="to_time">
+		<type name="time"/>
+	</column>
 	<constraint name="pk_schedules" type="pk-constr" table="core.schedules">
 		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="ck_schedules_from_to" type="ck-constr" table="core.schedules">
+			<expression><![CDATA[from_time < to_time]]></expression>
 	</constraint>
 
 	<customidxs object-type="column">
@@ -807,7 +824,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	del-action="NO ACTION"/>
 
 <constraint name="uk_patients_clinics_doc_type_doc_number" type="uq-constr" table="core.patients">
-	<columns names="clinics_id,doc_number,doc_type" ref-type="src-columns"/>
+	<columns names="clinic_id,doc_number,doc_type" ref-type="src-columns"/>
 </constraint>
 
 <permission>
