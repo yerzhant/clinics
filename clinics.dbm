@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,259" last-zoom="1">
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="1">
 <role name="clinics_web"
       login="true"
       password="xxx"
@@ -25,7 +25,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="clinics">
 	<schema name="billing"/>
-	<position x="480" y="40"/>
+	<position x="450" y="0"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -42,7 +42,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="contracts">
 	<schema name="billing"/>
-	<position x="820" y="40"/>
+	<position x="750" y="0"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -94,7 +94,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="accruals">
 	<schema name="billing"/>
-	<position x="1200" y="60"/>
+	<position x="1150" y="0"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -122,7 +122,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="payments">
 	<schema name="billing"/>
-	<position x="1220" y="180"/>
+	<position x="1150" y="150"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -155,7 +155,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="payment_types">
 	<schema name="billing"/>
-	<position x="960" y="220"/>
+	<position x="1550" y="200"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -181,7 +181,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="staff">
 	<schema name="core"/>
-	<position x="320" y="860"/>
+	<position x="300" y="850"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -194,7 +194,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<column name="surname">
 		<type name="text"/>
 	</column>
-	<constraint name="pk_doctors" type="pk-constr" table="core.staff">
+	<constraint name="pk_staff" type="pk-constr" table="core.staff">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
@@ -217,7 +217,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="users">
 	<schema name="sequrity"/>
-	<position x="340" y="1180"/>
+	<position x="350" y="1200"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -254,14 +254,14 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="contact_types">
 	<schema name="core"/>
-	<position x="640" y="480"/>
+	<position x="650" y="500"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
 	<column name="name" not-null="true">
 		<type name="text"/>
 	</column>
-	<constraint name="pk_contract_types" type="pk-constr" table="core.contact_types">
+	<constraint name="pk_contact_types" type="pk-constr" table="core.contact_types">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 
@@ -295,6 +295,9 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
 	del-action="NO ACTION">
+	<label ref-type="src-label">
+		<position x="0" y="0"/>
+	</label>
 	<label ref-type="dst-label">
 		<position x="0" y="0"/>
 	</label>
@@ -346,7 +349,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="contacts">
 	<schema name="core"/>
-	<position x="480" y="640"/>
+	<position x="500" y="650"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -388,7 +391,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="patients">
 	<schema name="core"/>
-	<position x="860" y="480"/>
+	<position x="850" y="500"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -475,7 +478,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="services">
 	<schema name="core"/>
-	<position x="680" y="880"/>
+	<position x="700" y="900"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -511,7 +514,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="rendered_services">
 	<schema name="core"/>
-	<position x="1060" y="880"/>
+	<position x="1050" y="900"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -527,18 +530,15 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<constraint name="ck_rendered_services_price" type="ck-constr" table="core.rendered_services">
 			<expression><![CDATA[price > 0]]></expression>
 	</constraint>
-	<constraint name="ck_renderd_services_quantity" type="ck-constr" table="core.rendered_services">
+	<constraint name="ck_rendered_services_quantity" type="ck-constr" table="core.rendered_services">
 			<expression><![CDATA[quantity > 0]]></expression>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="doctors_patients_patient_id" index="5"/>
-		<object name="doctors_patients_staff_id" index="4"/>
 		<object name="service_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_rendered_services_doctors_patients" index="4"/>
 		<object name="fk_rendered_services_services" index="1"/>
 	</customidxs>
 </table>
@@ -558,9 +558,9 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<table name="doctors_patients">
+<table name="visits">
 	<schema name="core"/>
-	<position x="740" y="740"/>
+	<position x="750" y="750"/>
 	<column name="assigned_on" not-null="true">
 		<type name="timestamp"/>
 	</column>
@@ -570,6 +570,12 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<column name="is_paid" not-null="true" default-value="false">
 		<type name="bool"/>
 	</column>
+	<column name="id" not-null="true">
+		<type name="serial"/>
+	</column>
+	<constraint name="pk_visits" type="pk-constr" table="core.visits">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
 
 	<customidxs object-type="column">
 		<object name="patient_id" index="4"/>
@@ -577,9 +583,8 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_doctors_patients_patients" index="2"/>
-		<object name="fk_doctors_patients_staff" index="1"/>
-		<object name="pk_doctors_patients" index="0"/>
+		<object name="fk_visits_patients" index="1"/>
+		<object name="fk_visits_staff" index="0"/>
 	</customidxs>
 </table>
 
@@ -589,10 +594,8 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="core.staff"
-	 dst-table="core.doctors_patients"
+	 dst-table="core.visits"
 	 src-required="true" dst-required="false"
-	 identifier="true"
-
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
@@ -602,27 +605,14 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="core.patients"
-	 dst-table="core.doctors_patients"
-	 src-required="true" dst-required="false"
-	 identifier="true"
-
-	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
-
-<relationship name="doctors_paitients_has_many_rendered_services" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
-	 src-fk-pattern="fk_{dt}_{st}"
-	 custom-color="#aa55ff"
-	 src-table="core.doctors_patients"
-	 dst-table="core.rendered_services"
+	 dst-table="core.visits"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
 <table name="medicines">
 	<schema name="core"/>
-	<position x="1200" y="520"/>
+	<position x="1150" y="500"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -665,7 +655,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="supplied_medicines">
 	<schema name="core"/>
-	<position x="1140" y="720"/>
+	<position x="1150" y="700"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -686,13 +676,10 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="doctors_patients_patient_id" index="5"/>
-		<object name="doctors_patients_staff_id" index="4"/>
 		<object name="medicine_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_supplied_medicines_doctors_patients" index="4"/>
 		<object name="fk_supplied_medicines_medicines" index="3"/>
 	</customidxs>
 </table>
@@ -703,17 +690,6 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="core.medicines"
-	 dst-table="core.supplied_medicines"
-	 src-required="true" dst-required="false"
-	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
-
-<relationship name="doctors_paitients_has_many_supplied_medicines" type="rel1n"
-	 src-col-pattern="{st}_{sc}"
-	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
-	 src-fk-pattern="fk_{dt}_{st}"
-	 custom-color="#aa55ff"
-	 src-table="core.doctors_patients"
 	 dst-table="core.supplied_medicines"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
@@ -732,7 +708,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="positions">
 	<schema name="core"/>
-	<position x="220" y="640"/>
+	<position x="200" y="650"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -777,13 +753,13 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<constraint name="uk_positions_clinic_id_name" type="uq-constr" table="core.positions">
+<constraint name="uk_positions_name" type="uq-constr" table="core.positions">
 	<columns names="name,clinic_id" ref-type="src-columns"/>
 </constraint>
 
 <table name="schedules">
 	<schema name="core"/>
-	<position x="620" y="1040"/>
+	<position x="600" y="1050"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -823,9 +799,31 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<constraint name="uk_patients_clinics_doc_type_doc_number" type="uq-constr" table="core.patients">
-	<columns names="clinic_id,doc_number,doc_type" ref-type="src-columns"/>
+<constraint name="uk_patients_doc_type_doc_number" type="uq-constr" table="core.patients">
+	<columns names="doc_number,doc_type,clinic_id" ref-type="src-columns"/>
 </constraint>
+
+<relationship name="visits_has_many_rendered_services" type="rel1n"
+	 src-col-pattern="visit_id"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.visits"
+	 dst-table="core.rendered_services"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="visits_has_many_supplied_medicines" type="rel1n"
+	 src-col-pattern="visit_id"
+	 pk-pattern="pk_{dt}" uq-pattern="uk_{dt}"
+	 src-fk-pattern="fk_{dt}_{st}"
+	 custom-color="#aa55ff"
+	 src-table="core.visits"
+	 dst-table="core.supplied_medicines"
+	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
 
 <permission>
 	<object name="core" type="schema"/>
