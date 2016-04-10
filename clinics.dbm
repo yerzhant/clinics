@@ -3,7 +3,8 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="1">
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="1"
+	 default-owner="postgres">
 <role name="clinics_web"
       login="true"
       password="xxx"
@@ -82,14 +83,6 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<constraint name="ck_contracts_ended_on" type="ck-constr" table="billing.contracts">
 			<expression><![CDATA[started_on <= ended_on]]></expression>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="clinic_id" index="9"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="fk_contracts_clinics" index="4"/>
-	</customidxs>
 </table>
 
 <table name="accruals">
@@ -110,14 +103,6 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<constraint name="ck_accruals_amount" type="ck-constr" table="billing.accruals">
 			<expression><![CDATA[amount > 0]]></expression>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="contract_id" index="3"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="fk_accruals_contracts" index="2"/>
-	</customidxs>
 </table>
 
 <table name="payments">
@@ -141,16 +126,6 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<constraint name="ck_payments_amount" type="ck-constr" table="billing.payments">
 			<expression><![CDATA[amount > 0]]></expression>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="contract_id" index="5"/>
-		<object name="payment_type_id" index="4"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="fk_payments_contracts" index="3"/>
-		<object name="fk_payments_payment_types" index="2"/>
-	</customidxs>
 </table>
 
 <table name="payment_types">
@@ -199,14 +174,10 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="clinic_id" index="5"/>
-		<object name="position_id" index="6"/>
 		<object name="user_id" index="4"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_staff_clinics" index="3"/>
-		<object name="fk_staff_positions" index="4"/>
 		<object name="fk_staff_users" index="1"/>
 		<object name="uk_staff" index="2"/>
 	</customidxs>
@@ -411,7 +382,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 		<type name="text"/>
 	</column>
 	<column name="doc_type">
-		<type name="core.doc_type" precision="32661"/>
+		<type name="core.doc_type" precision="32693"/>
 	</column>
 	<constraint name="pk_patients" type="pk-constr" table="core.patients">
 		<columns names="id" ref-type="src-columns"/>
@@ -437,19 +408,6 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<relationship name="many_clinics_has_many_contacts" type="relnn"
-	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
-	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
-	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
-	 pk-col-pattern="id"
-	 custom-color="#00ff00"
-	 src-table="billing.clinics"
-	 dst-table="core.contacts"
-	 src-required="false" dst-required="false"
-	 table-name="clinics_contacts"
-	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
-
 <relationship name="many_doctors_has_many_contacts" type="relnn"
 	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
 	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
@@ -459,7 +417,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-table="core.staff"
 	 dst-table="core.contacts"
 	 src-required="false" dst-required="false"
-	 table-name="doctors_contacts"
+	 table-name="staff_contacts"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
@@ -472,7 +430,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-table="core.patients"
 	 dst-table="core.contacts"
 	 src-required="false" dst-required="false"
-	 table-name="paitients_contacts"
+	 table-name="patients_contacts"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
@@ -578,12 +536,10 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="patient_id" index="4"/>
 		<object name="staff_id" index="3"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_visits_patients" index="1"/>
 		<object name="fk_visits_staff" index="0"/>
 	</customidxs>
 </table>
@@ -716,19 +672,11 @@ insert into clinics(name) values('abc');]]></appended-sql>
 		<type name="text"/>
 	</column>
 	<column name="role" not-null="true">
-		<type name="core.role" dimension="1" precision="32661"/>
+		<type name="core.role" dimension="1" precision="32693"/>
 	</column>
 	<constraint name="pk_positions" type="pk-constr" table="core.positions">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="clinic_id" index="3"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="fk_positions_clinics" index="1"/>
-	</customidxs>
 </table>
 
 <relationship name="positions_has_many_doctors" type="rel1n"
@@ -764,7 +712,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 		<type name="serial"/>
 	</column>
 	<column name="day" not-null="true">
-		<type name="core.week_day" precision="32661"/>
+		<type name="core.week_day" precision="32693"/>
 	</column>
 	<column name="from_time">
 		<type name="time"/>
@@ -822,6 +770,19 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 src-table="core.visits"
 	 dst-table="core.supplied_medicines"
 	 src-required="true" dst-required="false"
+	upd-action="NO ACTION"
+	del-action="NO ACTION"/>
+
+<relationship name="many_contacts_has_many_clinics" type="relnn"
+	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
+	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
+	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
+	 pk-col-pattern="id"
+	 custom-color="#00ff00"
+	 src-table="core.contacts"
+	 dst-table="billing.clinics"
+	 src-required="false" dst-required="false"
+	 table-name="contacts_clinics"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
