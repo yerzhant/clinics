@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        session(['clinic-id' => 1]); // TODO replace 1 by the real id for an authenticated user
     }
 
     /**

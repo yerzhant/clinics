@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/contact-types', 'ContactTypeController@index');
+Route::post('/contact-type', 'ContactTypeController@store');
+Route::delete('/contact-type/{contact-type}', 'ContactTypeController@destory');
