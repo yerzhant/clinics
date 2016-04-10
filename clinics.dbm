@@ -773,16 +773,21 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
-<relationship name="many_contacts_has_many_clinics" type="relnn"
+<textbox name="TODO" font-size="9">
+	<position x="90" y="200"/>
+	<comment><![CDATA[Maybe one must add indexes on foreign keys.]]></comment>
+</textbox>
+
+<relationship name="many_clinics_has_many_contacts" type="relnn"
 	 src-col-pattern="{st}_{sc}" dst-col-pattern="{dt}_id"
 	 pk-pattern="pk_{gt}" uq-pattern="uk_{gt}"
 	 src-fk-pattern="fk_{gt}_{st}" dst-fk-pattern="fk_{gt}_{dt}"
 	 pk-col-pattern="id"
 	 custom-color="#00ff00"
-	 src-table="core.contacts"
-	 dst-table="billing.clinics"
+	 src-table="billing.clinics"
+	 dst-table="core.contacts"
 	 src-required="false" dst-required="false"
-	 table-name="contacts_clinics"
+	 table-name="clinics_contacts"
 	upd-action="NO ACTION"
 	del-action="NO ACTION"/>
 
