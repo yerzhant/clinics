@@ -14,7 +14,7 @@ class ContactTypeController extends Controller
         $contactTypes = ContactType::where('clinic_id', session('clinic-id'))
                         ->orderby('name')->get();
 
-        return view('contact-types.index', [
+        return view('contact-types', [
             'contactTypes' => $contactTypes,
         ]);
     }

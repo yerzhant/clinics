@@ -29,7 +29,7 @@
                     <li class="w3-dropdown-hover w3-hide-small">
                         <a href="#"><i class="fa fa-book"></i> Cправочники <i class="fa fa-caret-down"></i></a>
                         <section class="w3-dropdown-content w3-card-4 w3-theme-d2">
-                            <a href="#"><i class="fa fa-medkit"></i> Медикаменты</a>
+                            <a href="medicines"><i class="fa fa-medkit"></i> Медикаменты</a>
                             <a href="#"><i class="fa fa-briefcase"></i> Должности</a>
                             <a href="contact-types"><i class="fa fa-map-marker"></i> Типы контактов</a>
                         </section>
