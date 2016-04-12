@@ -1,3 +1,7 @@
 main {
     margin-top: 50px;
 }
+
+td.command {
+    width: 0;
+}

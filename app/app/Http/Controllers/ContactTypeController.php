@@ -11,21 +11,41 @@ class ContactTypeController extends Controller
 {
     public function index()
     {
-        return view('contact-types.index');
+        $contactTypes = ContactType::where('clinic_id', session('clinic-id'))
+                        ->orderby('name')->get();
+
+        return view('contact-types.index', [
+            'contactTypes' => $contactTypes,
+        ]);
     }
 
-    public function store(Request $reqest)
+    public function store(Request $request)
     {
-        $ct = new ContactType;
-        $ct->name = $reqest->name;
-        $ct->clinic_id = session('clinic-id');
-        $ct->save();
+        // TODO to be added an authorization
+
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        if ($request->id == "") {
+            $contactType = new ContactType;
+            $contactType->clinic_id = session('clinic-id');
+        } else {
+            $contactType = ContactType::find($request->id);
+        }
+
+        $contactType->name = $request->name;
+        $contactType->save();
 
         return redirect('/contact-types');
     }
 
     public function destory(Request $request, ContactType $contactType)
     {
+        // TODO add authorization
 
+        $contactType->delete();
+
+        return redirect('/contact-types');
     }
 }

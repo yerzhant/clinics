@@ -15,21 +15,35 @@
     <body>
         <header>
             <section class="w3-top">
-                <nav class="w3-navbar w3-card-4 w3-theme">
-                    <li><a href="#"><i class="fa fa-home"></i></a></li>
-                    <li><a href="#"><i class="fa fa-user-md"></i> Сотрудники</a></li>
-                    <li><a href="#"><i class="fa fa-bed"></i> Пациенты</a></li>
-                    <li class="w3-dropdown-hover">
+                <nav class="w3-navbar w3-card-4 w3-theme-d2">
+                    <li class="w3-opennav w3-hide-medium w3-hide-large">
+                            <a href="#"><i class="fa fa-bars"></i></a>
+                    </li>
+
+                    <li class="w3-opennav"><a href="#"><i class="fa fa-home"></i></a></li>
+
+                    <li class="w3-hide-small"><a href="#"><i class="fa fa-user-md"></i> Сотрудники</a></li>
+
+                    <li class="w3-hide-small"><a href="#"><i class="fa fa-bed"></i> Пациенты</a></li>
+
+                    <li class="w3-dropdown-hover w3-hide-small">
                         <a href="#"><i class="fa fa-book"></i> Cправочники <i class="fa fa-caret-down"></i></a>
-                        <section class="w3-dropdown-content w3-card-4 w3-theme">
+                        <section class="w3-dropdown-content w3-card-4 w3-theme-d2">
                             <a href="#"><i class="fa fa-medkit"></i> Медикаменты</a>
                             <a href="#"><i class="fa fa-briefcase"></i> Должности</a>
                             <a href="contact-types"><i class="fa fa-map-marker"></i> Типы контактов</a>
                         </section>
                     </li>
-                    <li class="w3-right"><a href="#"><i class="fa fa-sign-out"></i></a></li>
-                    <li class="w3-right"><a href="#"><i class="fa fa-cog"></i> A user name</a></li>
-                    <li class="w3-right"><a href="#"><i class="fa fa-money"></i> Баланс: 0 тг</a></li>
+
+                    <li class="w3-right w3-opennav"><a href="#" title="Выход"><i class="fa fa-sign-out"></i></a></li>
+
+                    <li class="w3-right w3-opennav"><a href="#" title="Профиль"><i class="fa fa-cog"></i>
+                        <span class="w3-hide-small"> A user name</span></a>
+                    </li>
+
+                    <li class="w3-right w3-opennav"><a href="#" title="Баланс: 0 тг"><i class="fa fa-money"></i>
+                        <span class="w3-hide-small"> 0 тг</span></a>
+                    </li>
                 </nav>
             </section>
         </header>
@@ -50,4 +64,5 @@
 
         <footer class="w3-container">&copy; {{ date('Y') }} v.{{ env('app.version') }}</footer>
     </body>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 </html>
