@@ -25,6 +25,7 @@ class MedicineController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
+            'price' => 'numeric',
         ]);
 
         if ($request->id == "") {
