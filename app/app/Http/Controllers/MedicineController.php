@@ -29,15 +29,15 @@ class MedicineController extends Controller
         ]);
 
         if ($request->id == "") {
-            $Medicine = new Medicine;
-            $Medicine->clinic_id = session('clinic-id');
+            $medicine = new Medicine;
+            $medicine->clinic_id = session('clinic-id');
         } else {
-            $Medicine = Medicine::find($request->id);
+            $medicine = Medicine::find($request->id);
         }
 
-        $Medicine->name = $request->name;
-        $Medicine->price = $request->price ?: null;
-        $Medicine->save();
+        $medicine->name = $request->name;
+        $medicine->price = $request->price ?: null;
+        $medicine->save();
 
         return redirect('/medicines');
     }
