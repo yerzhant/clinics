@@ -46,13 +46,13 @@
                     </td>
 
                     <td>
-                        {{ $medicine->price }}
+                        {{ $position->price }}
                     </td>
 
                     <td class="command">
                         <button class="w3-btn w3-round w3-ripple w3-theme w3-hover-green" title="Изменить"
-                                onclick="$('#id').val('{{ $medicine->id }}');
-                                         $('#name').val('{{ $medicine->name }}');
+                                onclick="$('#id').val('{{ $position->id }}');
+                                         $('#name').val('{{ $position->name }}');
                                          $('#price').val('{{ $medicine->price }}')">
                             <i class="fa fa-pencil"></i>
                         </button>

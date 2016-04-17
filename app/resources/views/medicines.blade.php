@@ -39,6 +39,20 @@
 
     <section class="w3-row w3-margin-top">
         <table class="w3-table w3-striped w3-hoverable">
+            <tr>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
             @foreach($medicines as $medicine)
                 <tr>
                     <td>
