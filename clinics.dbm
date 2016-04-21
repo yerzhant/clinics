@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="1"
+<dbmodel pgmodeler-ver="0.8.1" last-position="3,157" last-zoom="1"
 	 default-owner="postgres">
 <role name="clinics_web"
       login="true"
@@ -382,7 +382,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 		<type name="text"/>
 	</column>
 	<column name="doc_type">
-		<type name="core.doc_type" precision="32693"/>
+		<type name="core.doc_type" precision="32595"/>
 	</column>
 	<constraint name="pk_patients" type="pk-constr" table="core.patients">
 		<columns names="id" ref-type="src-columns"/>
@@ -671,12 +671,20 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<column name="name" not-null="true">
 		<type name="text"/>
 	</column>
-	<column name="role" not-null="true">
-		<type name="core.role" dimension="1" precision="32693"/>
+	<column name="roles" not-null="true">
+		<type name="core.role" dimension="1" precision="32595"/>
 	</column>
 	<constraint name="pk_positions" type="pk-constr" table="core.positions">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
+
+	<customidxs object-type="column">
+		<object name="clinic_id" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="fk_positions_clinics" index="1"/>
+	</customidxs>
 </table>
 
 <relationship name="positions_has_many_doctors" type="rel1n"
@@ -712,7 +720,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 		<type name="serial"/>
 	</column>
 	<column name="day" not-null="true">
-		<type name="core.week_day" precision="32693"/>
+		<type name="core.week_day" precision="32595"/>
 	</column>
 	<column name="from_time">
 		<type name="time"/>

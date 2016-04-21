@@ -14,7 +14,7 @@
             <p class="w3-container w3-half">
                 <input id="name" type="text" class="w3-input"
                        name="name" placeholder="Введите значение" required>
-                <label class="w3-label">Наименование</label>
+                <label class="w3-label w3-validate">Наименование</label>
             </p>
 
             <p class="w3-container w3-half">

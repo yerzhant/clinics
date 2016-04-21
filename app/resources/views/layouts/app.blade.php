@@ -30,7 +30,7 @@
                         <a href="#"><i class="fa fa-book"></i> Cправочники <i class="fa fa-caret-down"></i></a>
                         <section class="w3-dropdown-content w3-card-4 w3-theme-d2">
                             <a href="medicines"><i class="fa fa-medkit"></i> Медикаменты</a>
-                            <a href="#"><i class="fa fa-briefcase"></i> Должности</a>
+                            <a href="positions"><i class="fa fa-briefcase"></i> Должности</a>
                             <a href="contact-types"><i class="fa fa-map-marker"></i> Типы контактов</a>
                         </section>
                     </li>
@@ -63,6 +63,7 @@
         </main>
 
         <footer class="w3-container">&copy; {{ date('Y') }} v.{{ env('app.version') }}</footer>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     </body>
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 </html>

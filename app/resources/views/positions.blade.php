@@ -6,21 +6,32 @@
 
 @section('content')
     <section class="w3-row">
-        <form action="medicine" method="post">
+        <form action="position" method="post">
             {!! csrf_field() !!}
 
             <input id="id" type="hidden" name="id" value="">
 
-            <p class="w3-container w3-half">
+            <p class="w3-container">
                 <input id="name" type="text" class="w3-input"
                        name="name" placeholder="Введите значение" required>
-                <label class="w3-label">Наименование</label>
+                <label class="w3-label w3-validate">Наименование</label>
             </p>
 
-            <p class="w3-container w3-half">
-                <input id="price" type="text" class="w3-input"
-                       name="price">
-                <label class="w3-label">Цена</label>
+            <p class="w3-container">
+                <input id="admin" type="checkbox" class="w3-check" name="admin">
+                <label class="w3-validate">Администратор</label>
+
+            <p class="w3-container">
+                <input id="doctor" type="checkbox" class="w3-check" name="doctor">
+                <label class="w3-validate">Врач</label>
+
+            <p class="w3-container">
+                <input id="accountant" type="checkbox" class="w3-check" name="accountant">
+                <label class="w3-validate">Бухгалтер</label>
+
+            <p class="w3-container">
+                <input id="receptionist" type="checkbox" class="w3-check" name="receptionist">
+                <label class="w3-validate">Рисепшенист</label>
             </p>
 
             <p class="w3-container">
@@ -39,6 +50,20 @@
 
     <section class="w3-row w3-margin-top">
         <table class="w3-table w3-striped w3-hoverable">
+            <tr>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Роли
+                </th>
+                <th>
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
             @foreach($positions as $position)
                 <tr>
                     <td>
@@ -46,20 +71,20 @@
                     </td>
 
                     <td>
-                        {{ $position->price }}
+                        {{ $position->roles_as_string }}
                     </td>
 
                     <td class="command">
                         <button class="w3-btn w3-round w3-ripple w3-theme w3-hover-green" title="Изменить"
                                 onclick="$('#id').val('{{ $position->id }}');
                                          $('#name').val('{{ $position->name }}');
-                                         $('#price').val('{{ $medicine->price }}')">
+                                         $('#price').val('{{ $position->price }}')">
                             <i class="fa fa-pencil"></i>
                         </button>
                     </td>
 
                     <td class="command">
-                        <form action="/medicine/{{ $medicine->id }}" method="post">
+                        <form action="/medicine/{{ $position->id }}" method="post">
                             {!! csrf_field() !!}
                             {!! method_field('DELETE') !!}
 

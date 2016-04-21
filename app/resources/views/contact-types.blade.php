@@ -15,7 +15,7 @@
             <p>
                 <input id="name" type="text" class="w3-input"
                        name="name" placeholder="Введите значение" required>
-                <label class="w3-label">Наименование</label>
+                <label class="w3-label w3-validate">Наименование</label>
             </p>
 
             <button type="submit" class="w3-btn w3-round w3-ripple w3-theme w3-hover-deep-orange">
