@@ -13,3 +13,13 @@ td.command {
 .checkboxes div {
     float: left;
 }
+
+.data {
+    position: relative;
+}
+
+.w3-btn-floating {
+    position: absolute;
+    top: -20px;
+    right: 10px;
+}

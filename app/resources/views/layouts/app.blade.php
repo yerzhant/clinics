@@ -24,7 +24,7 @@
 
                     <li class="w3-hide-small"><a href="#"><i class="fa fa-user-md"></i> Сотрудники</a></li>
 
-                    <li class="w3-hide-small"><a href="#"><i class="fa fa-bed"></i> Пациенты</a></li>
+                    <li class="w3-hide-small"><a href="patients"><i class="fa fa-bed"></i> Пациенты</a></li>
 
                     <li class="w3-dropdown-hover w3-hide-small">
                         <a href="#"><i class="fa fa-book"></i> Cправочники <i class="fa fa-caret-down"></i></a>

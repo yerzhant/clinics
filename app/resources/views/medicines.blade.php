@@ -32,7 +32,6 @@
                         onclick="$('#id').val('')">
                     <i class="fa fa-ban"></i> Отменить
                 </button>
-
             </section>
         </form>
     </section>
@@ -58,7 +57,6 @@
                     <td>
                         {{ $medicine->name }}
                     </td>
-
                     <td>
                         {{ $medicine->price }}
                     </td>
@@ -90,7 +88,6 @@
                                         <i class="fa fa-trash"> Удалить</i>
                                     </button>
                                 </form>
-
                             </section>
                         </section>
 

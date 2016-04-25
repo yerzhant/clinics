@@ -48,7 +48,6 @@
                         onclick="$('#id').val('')">
                     <i class="fa fa-ban"></i> Отменить
                 </button>
-
             </section>
         </form>
     </section>
@@ -74,7 +73,6 @@
                     <td>
                         {{ $position->name }}
                     </td>
-
                     <td>
                         {{ $position->roles_as_string }}
                     </td>
@@ -121,6 +119,4 @@
             @endforeach
         </table>
     </section>
-
-
 @endsection

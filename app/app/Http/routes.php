@@ -26,3 +26,7 @@ Route::delete('/medicine/{medicine}', 'MedicineController@destory');
 Route::get('/positions', 'PositionController@index');
 Route::post('/position', 'PositionController@store');
 Route::delete('/position/{position}', 'PositionController@destory');
+
+Route::get('/patients', 'PatientController@index');
+Route::post('/patient', 'PatientController@store');
+Route::delete('/patient/{patient}', 'PatientController@destory');

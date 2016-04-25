@@ -11,7 +11,6 @@
 
             <input id="id" type="hidden" name="id" value="">
 
-
             <section class="w3-container">
                 <input id="name" type="text" class="w3-input"
                        name="name" placeholder="Введите значение" required>
