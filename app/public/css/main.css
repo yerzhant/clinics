@@ -2,6 +2,14 @@ main {
     margin-top: 50px;
 }
 
+td {
+    vertical-align: middle !important;
+}
+
 td.command {
     width: 0;
+}
+
+.checkboxes div {
+    float: left;
 }

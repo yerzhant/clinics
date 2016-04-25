@@ -22,10 +22,13 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         // TODO to be added an authorization
-
+    
         $this->validate($request, [
             'name' => 'required',
-            'role' => 'required',
+            'admin' => 'required_without_all:doctor,accountant,receptionist',
+            'doctor' => 'required_without_all:admin,accountant,receptionist',
+            'accountant' => 'required_without_all:admin,doctor,receptionist',
+            'receptionist' => 'required_without_all:admin,doctor,accountant',
         ]);
 
         if ($request->id == "") {
@@ -36,7 +39,23 @@ class PositionController extends Controller
         }
 
         $position->name = $request->name;
-        // $position->price = $request->price ?: null;
+
+        $roles = [];
+
+        if($request->admin == "on")
+            $roles[] = "admin";
+
+        if($request->doctor == "on")
+            $roles[] = "doctor";
+
+        if($request->accountant == "on")
+            $roles[] = "accountant";
+
+        if($request->receptionist == "on")
+            $roles[] = "receptionist";
+
+        $position->roles = "{" . implode(",", $roles) . "}";
+
         $position->save();
 
         return redirect('/positions');
