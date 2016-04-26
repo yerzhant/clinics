@@ -80,51 +80,23 @@
 
         <table class="w3-table w3-striped w3-hoverable">
             <tr class="w3-theme-l2">
-                <th>
-                    Фамилия
-                </th>
-                <th>
-                    Имя
-                </th>
-                <th>
-                    Отчество
-                </th>
-                <th>
-                    Дата рождения
-                </th>
-                <th>
-                    Вид документа
-                </th>
-                <th>
-                    № документа
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Дата рождения</th>
+                <th>Вид документа</th>
+                <th>№ документа</th>
+                <th></th>
+                <th></th>
             </tr>
             @foreach($patients as $patient)
                 <tr>
-                    <td>
-                        {{ $patient->last_name }}
-                    </td>
-                    <td>
-                        {{ $patient->first_name }}
-                    </td>
-                    <td>
-                        {{ $patient->surname }}
-                    </td>
-                    <td>
-                        {{ $patient->birth_date }}
-                    </td>
-                    <td>
-                        {{ $patient->doc_type }}
-                    </td>
-                    <td>
-                        {{ $patient->doc_number }}
-                    </td>
+                    <td>{{ $patient->last_name }}</td>
+                    <td>{{ $patient->first_name }}</td>
+                    <td>{{ $patient->surname }}</td>
+                    <td>{{ $patient->birth_date }}</td>
+                    <td>{{ $patient->doc_type }}</td>
+                    <td>{{ $patient->doc_number }}</td>
 
                     <td class="command">
                         <button class="w3-btn w3-round w3-ripple w3-theme w3-hover-green" title="Изменить"

@@ -11,7 +11,7 @@ class MedicineController extends Controller
 {
     public function index()
     {
-        $medicines = Medicine::where('clinic_id', session('clinic-id'))
+        $medicines = Medicine::where('clinic_id', $this->clinic_id)
                         ->orderby('name')->get();
 
         return view('medicines', [
@@ -24,13 +24,13 @@ class MedicineController extends Controller
         // TODO to be added an authorization
 
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:medicines,name,null,id,clinic_id,' . $this->clinic_id,
             'price' => 'numeric',
         ]);
 
         if ($request->id == "") {
             $medicine = new Medicine;
-            $medicine->clinic_id = session('clinic-id');
+            $medicine->clinic_id = $this->clinic_id;
         } else {
             $medicine = Medicine::find($request->id);
         }

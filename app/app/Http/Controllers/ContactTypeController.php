@@ -11,7 +11,7 @@ class ContactTypeController extends Controller
 {
     public function index()
     {
-        $contactTypes = ContactType::where('clinic_id', session('clinic-id'))
+        $contactTypes = ContactType::where('clinic_id', $this->clinic_id)
                         ->orderby('name')->get();
 
         return view('contact-types', [
@@ -24,12 +24,12 @@ class ContactTypeController extends Controller
         // TODO to be added an authorization
 
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:contact_types,name,null,id,clinic_id,' . $this->clinic_id,
         ]);
 
         if ($request->id == "") {
             $contactType = new ContactType;
-            $contactType->clinic_id = session('clinic-id');
+            $contactType->clinic_id = $this->clinic_id;
         } else {
             $contactType = ContactType::find($request->id);
         }

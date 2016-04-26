@@ -11,7 +11,7 @@ class PositionController extends Controller
 {
     public function index()
     {
-        $positions = Position::where('clinic_id', session('clinic-id'))
+        $positions = Position::where('clinic_id', $this->clinic_id)
                         ->orderby('name')->get();
 
         return view('positions', [
@@ -22,9 +22,9 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         // TODO to be added an authorization
-    
+
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:positions,name,null,id,clinic_id,' . $this->clinic_id,
             'admin' => 'required_without_all:doctor,accountant,receptionist',
             'doctor' => 'required_without_all:admin,accountant,receptionist',
             'accountant' => 'required_without_all:admin,doctor,receptionist',
@@ -33,7 +33,7 @@ class PositionController extends Controller
 
         if ($request->id == "") {
             $position = new Position;
-            $position->clinic_id = session('clinic-id');
+            $position->clinic_id = $this->clinic_id;
         } else {
             $position = Position::find($request->id);
         }

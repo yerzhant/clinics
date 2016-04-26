@@ -11,4 +11,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+
+    protected $clinic_id;
+
+    public function __construct()
+    {
+        $this->clinic_id = session("clinic-id");
+    }
 }
