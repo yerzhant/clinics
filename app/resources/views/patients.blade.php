@@ -88,6 +88,7 @@
                 <th>№ документа</th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             @foreach($patients as $patient)
                 <tr>
@@ -97,6 +98,12 @@
                     <td>{{ $patient->birth_date }}</td>
                     <td>{{ $patient->doc_type }}</td>
                     <td>{{ $patient->doc_number }}</td>
+
+                    <td class="command">
+                        <a href="patient/{{ $patient->id }}/contacts" class="w3-btn w3-round w3-ripple w3-theme w3-hover-blue" title="Контакты">
+                            <i class="fa fa-map-marker"></i>
+                        </a>
+                    </td>
 
                     <td class="command">
                         <button class="w3-btn w3-round w3-ripple w3-theme w3-hover-green" title="Изменить"

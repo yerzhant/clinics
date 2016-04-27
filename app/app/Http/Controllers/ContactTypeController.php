@@ -11,8 +11,10 @@ class ContactTypeController extends Controller
 {
     public function index()
     {
-        $contactTypes = ContactType::where('clinic_id', $this->clinic_id)
-                        ->orderby('name')->get();
+        $contactTypes = ContactType::where([
+            ['clinic_id', $this->clinic_id],
+            ['is_billing', false],
+        ])->orderby('name')->get();
 
         return view('contact-types', [
             'contactTypes' => $contactTypes,
@@ -24,7 +26,7 @@ class ContactTypeController extends Controller
         // TODO to be added an authorization
 
         $this->validate($request, [
-            'name' => 'required|unique:contact_types,name,null,id,clinic_id,' . $this->clinic_id,
+            'name' => 'required|unique:contact_types,name,null,id,is_billing,false,clinic_id,' . $this->clinic_id,
         ]);
 
         if ($request->id == "") {
@@ -37,7 +39,7 @@ class ContactTypeController extends Controller
         $contactType->name = $request->name;
         $contactType->save();
 
-        return redirect('/contact-types');
+        return back();
     }
 
     public function destory(Request $request, ContactType $contactType)
@@ -46,6 +48,6 @@ class ContactTypeController extends Controller
 
         $contactType->delete();
 
-        return redirect('/contact-types');
+        return back();
     }
 }

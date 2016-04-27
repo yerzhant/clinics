@@ -58,7 +58,7 @@ class PositionController extends Controller
 
         $position->save();
 
-        return redirect('/positions');
+        return back();
     }
 
     public function destory(Request $request, Position $position)
@@ -67,6 +67,6 @@ class PositionController extends Controller
 
         $position->delete();
 
-        return redirect('/positions');
+        return back();
     }
 }

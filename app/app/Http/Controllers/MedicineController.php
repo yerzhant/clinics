@@ -39,7 +39,7 @@ class MedicineController extends Controller
         $medicine->price = $request->price ?: null;
         $medicine->save();
 
-        return redirect('/medicines');
+        return back();
     }
 
     public function destory(Request $request, Medicine $medicine)
@@ -48,6 +48,6 @@ class MedicineController extends Controller
 
         $medicine->delete();
 
-        return redirect('/medicines');
+        return back();
     }
 }

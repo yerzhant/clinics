@@ -30,3 +30,7 @@ Route::delete('/position/{position}', 'PositionController@destory');
 Route::get('/patients', 'PatientController@index');
 Route::post('/patient', 'PatientController@store');
 Route::delete('/patient/{patient}', 'PatientController@destory');
+
+Route::get('/patient/{patient}/contacts', 'ContactController@index');
+Route::post('patient/{patient}/contact', 'ContactController@store');
+Route::delete('patient/{patient}/contact/{contact}', 'ContactController@destory');

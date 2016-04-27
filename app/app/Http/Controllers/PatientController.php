@@ -52,7 +52,7 @@ class PatientController extends Controller
 
         $patient->save();
 
-        return redirect('/patients');
+        return back();
     }
 
     public function destory(Request $request, Medicine $medicine)
@@ -61,6 +61,6 @@ class PatientController extends Controller
 
         $medicine->delete();
 
-        return redirect('/medicines');
+        return back();
     }
 }

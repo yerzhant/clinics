@@ -23,4 +23,9 @@ class Patient extends Model
                 return "Паспорт";
         };
     }
+
+    public function contacts()
+    {
+        return $this->hasMany('App\Contact');
+    }
 }

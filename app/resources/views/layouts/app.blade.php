@@ -24,14 +24,14 @@
 
                     <li class="w3-hide-small"><a href="#"><i class="fa fa-user-md"></i> Сотрудники</a></li>
 
-                    <li class="w3-hide-small"><a href="patients"><i class="fa fa-bed"></i> Пациенты</a></li>
+                    <li class="w3-hide-small"><a href="/patients"><i class="fa fa-bed"></i> Пациенты</a></li>
 
                     <li class="w3-dropdown-hover w3-hide-small">
-                        <a href="#"><i class="fa fa-book"></i> Cправочники <i class="fa fa-caret-down"></i></a>
+                        <a><i class="fa fa-book"></i> Cправочники <i class="fa fa-caret-down"></i></a>
                         <section class="w3-dropdown-content w3-card-4 w3-theme-d2">
-                            <a href="medicines"><i class="fa fa-medkit"></i> Медикаменты</a>
-                            <a href="positions"><i class="fa fa-briefcase"></i> Должности</a>
-                            <a href="contact-types"><i class="fa fa-map-marker"></i> Типы контактов</a>
+                            <a href="/medicines"><i class="fa fa-medkit"></i> Медикаменты</a>
+                            <a href="/positions"><i class="fa fa-briefcase"></i> Должности</a>
+                            <a href="/contact-types"><i class="fa fa-map-marker"></i> Типы контактов</a>
                         </section>
                     </li>
 
