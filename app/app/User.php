@@ -15,5 +15,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $connection = 'security';
+    public $timestamps = false;
+
+    protected $table = 'security.users';
 }

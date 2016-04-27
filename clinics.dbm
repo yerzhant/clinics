@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,315" last-zoom="1"
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,295" last-zoom="1"
 	 default-owner="postgres">
 <role name="clinics_web"
       login="true"
@@ -221,7 +221,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	 pk-pattern="{dt}_pk" uq-pattern="uk_{dt}"
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#55aaff"
-	 src-table="sequrity.users"
+	 src-table="security.users"
 	 dst-table="core.staff"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
@@ -458,7 +458,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	 dst-table="core.services"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
+	del-action="CASCADE"/>
 
 <table name="rendered_services">
 	<schema name="core"/>
@@ -743,7 +743,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	 dst-table="core.schedules"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
+	del-action="CASCADE"/>
 
 <constraint name="uk_patients_doc_type_doc_number" type="uq-constr" table="core.patients">
 	<columns names="doc_number,doc_type,clinic_id" ref-type="src-columns"/>
@@ -807,7 +807,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	 dst-table="core.contacts"
 	 src-required="false" dst-required="false"
 	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
+	del-action="CASCADE"/>
 
 <permission>
 	<object name="core" type="schema"/>

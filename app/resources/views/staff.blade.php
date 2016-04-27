@@ -45,6 +45,24 @@
                     <label class="w3-label w3-validate">Отчество</label>
                 </section>
 
+                <section class="w3-container w3-third">
+                    <input id="email" type="email" class="w3-input"
+                           name="email" placeholder="Введите значение" required>
+                    <label class="w3-label w3-validate">e-mail</label>
+                </section>
+
+                <section class="w3-container w3-third">
+                    <input id="password" type="password" class="w3-input"
+                           name="password">
+                    <label class="w3-label w3-validate">Пароль</label>
+                </section>
+
+                <section class="w3-container w3-third">
+                    <input id="password_confirmation" type="password" class="w3-input"
+                           name="password_confirmation">
+                    <label class="w3-label w3-validate">Подтверждение</label>
+                </section>
+
                 <section class="w3-container w3-padding-hor-8 w3-center w3-rest">
                     <button type="submit" class="w3-btn w3-round w3-ripple w3-theme w3-hover-deep-orange"
                             onclick="$('#modal').css('display', 'none')">
@@ -72,7 +90,8 @@
                 <th>Имя</th>
                 <th>Отчество</th>
                 <th>Должность</th>
-                <th>Логин</th>
+                <th>e-mail</th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -84,6 +103,12 @@
                     <td>{{ $s->surname }}</td>
                     <td>{{ $s->position->name }}</td>
                     <td>{{ $s->user->email }}</td>
+
+                    <td class="command">
+                        <a href="/staff/{{ $s->id }}/services" class="w3-btn w3-round w3-ripple w3-theme w3-hover-blue" title="Услуги">
+                            <i class="fa fa-stethoscope"></i>
+                        </a>
+                    </td>
 
                     <td class="command">
                         <a href="staff/{{ $s->id }}/contacts" class="w3-btn w3-round w3-ripple w3-theme w3-hover-blue" title="Контакты">
@@ -98,6 +123,7 @@
                                          $('#first_name').val('{{ $s->first_name }}');
                                          $('#surname').val('{{ $s->surname }}');
                                          $('#position').val('{{ $s->position_id }}');
+                                         $('#email').val('{{ $s->user->email }}');
                                          $('#modal').css('display', 'block')">
                             <i class="fa fa-pencil"></i>
                         </button>

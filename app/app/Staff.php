@@ -18,4 +18,9 @@ class Staff extends Model
     {
         return $this->hasMany('App\Contact');
     }
+
+    public function services()
+    {
+        return $this->hasMany('App\Service');
+    }
 }

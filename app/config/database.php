@@ -58,18 +58,6 @@ return [
             'schema' => 'core',
         ],
 
-        'security' => [
-            'driver' => 'pgsql',
-            'host' => 'localhost',
-            'port' => '5432',
-            'database' => 'clinics',
-            'username' => 'clinics_web',
-            'password' => 'xxx',
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'security',
-        ],
-
     ],
 
     /*
