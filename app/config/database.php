@@ -46,27 +46,7 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-        ],
-
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
-            'strict' => false,
-            'engine' => null,
-        ],
-
-        'pgsql' => [
+        'core' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '5432'),
@@ -76,6 +56,18 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'core',
+        ],
+
+        'security' => [
+            'driver' => 'pgsql',
+            'host' => 'localhost',
+            'port' => '5432',
+            'database' => 'clinics',
+            'username' => 'clinics_web',
+            'password' => 'xxx',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'security',
         ],
 
     ],

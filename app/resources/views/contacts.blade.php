@@ -45,9 +45,9 @@
     </section>
 
     <section class="w3-row w3-margin-top">
-        <h3>{{ $patient->last_name }} {{ $patient->first_name }} {{ $patient->surname }}</h3>
+        <h3>{{ $entity->last_name }} {{ $entity->first_name }} {{ $entity->surname }}</h3>
         <table class="w3-table w3-striped w3-hoverable">
-            <tr>
+            <tr class="w3-theme-l2">
                 <th>Тип</th>
                 <th>Значение</th>
                 <th></th>
@@ -75,7 +75,7 @@
                                     <h3>Предупреждение</h3>
                                 </header>
 
-                                <form class="w3-container w3-pale-red" action="contact/{{ $contact->id }}" method="post">
+                                <form class="w3-container w3-pale-red" action="/contact/{{ $contact->id }}" method="post">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
 

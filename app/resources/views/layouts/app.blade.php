@@ -22,7 +22,7 @@
 
                     <li class="w3-opennav"><a href="#"><i class="fa fa-home"></i></a></li>
 
-                    <li class="w3-hide-small"><a href="#"><i class="fa fa-user-md"></i> Сотрудники</a></li>
+                    <li class="w3-hide-small"><a href="/staff"><i class="fa fa-user-md"></i> Сотрудники</a></li>
 
                     <li class="w3-hide-small"><a href="/patients"><i class="fa fa-bed"></i> Пациенты</a></li>
 

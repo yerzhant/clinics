@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,0" last-zoom="1"
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,315" last-zoom="1"
 	 default-owner="postgres">
 <role name="clinics_web"
       login="true"
@@ -15,7 +15,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<appended-sql><![CDATA[grant select, insert, update, delete on all tables in schema core to clinics_web;
 grant usage on all sequences in schema core to clinics_web;
 
-insert into clinics(name) values('abc');]]></appended-sql>
+grant select, insert, update, delete on all tables in schema security to clinics_web;
+grant usage on all sequences in schema security to clinics_web;
+
+insert into clinics(name) values('abc');
+insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 </database>
 
 <schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
@@ -156,7 +160,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="staff">
 	<schema name="core"/>
-	<position x="300" y="850"/>
+	<position x="300" y="849"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -183,11 +187,11 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	</customidxs>
 </table>
 
-<schema name="sequrity" rect-visible="true" fill-color="#e1e1e1">
+<schema name="security" rect-visible="true" fill-color="#e1e1e1">
 </schema>
 
 <table name="users">
-	<schema name="sequrity"/>
+	<schema name="security"/>
 	<position x="350" y="1200"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
@@ -204,10 +208,10 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	<column name="is_admin" not-null="true" default-value="false">
 		<type name="bool"/>
 	</column>
-	<constraint name="pk_users" type="pk-constr" table="sequrity.users">
+	<constraint name="pk_users" type="pk-constr" table="security.users">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="uk_users_email" type="uq-constr" table="sequrity.users">
+	<constraint name="uk_users_email" type="uq-constr" table="security.users">
 		<columns names="email" ref-type="src-columns"/>
 	</constraint>
 </table>
@@ -225,7 +229,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="contact_types">
 	<schema name="core"/>
-	<position x="650" y="500"/>
+	<position x="650" y="499"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -323,7 +327,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="contacts">
 	<schema name="core"/>
-	<position x="500" y="650"/>
+	<position x="500" y="649"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -374,7 +378,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="patients">
 	<schema name="core"/>
-	<position x="850" y="500"/>
+	<position x="850" y="499"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -422,7 +426,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="services">
 	<schema name="core"/>
-	<position x="700" y="900"/>
+	<position x="700" y="899"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -458,7 +462,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="rendered_services">
 	<schema name="core"/>
-	<position x="1050" y="900"/>
+	<position x="1050" y="899"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -504,7 +508,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="visits">
 	<schema name="core"/>
-	<position x="750" y="750"/>
+	<position x="750" y="749"/>
 	<column name="assigned_on" not-null="true">
 		<type name="timestamp"/>
 	</column>
@@ -554,7 +558,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="medicines">
 	<schema name="core"/>
-	<position x="1150" y="500"/>
+	<position x="1150" y="499"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -597,7 +601,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="supplied_medicines">
 	<schema name="core"/>
-	<position x="1150" y="700"/>
+	<position x="1150" y="699"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -650,7 +654,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="positions">
 	<schema name="core"/>
-	<position x="200" y="650"/>
+	<position x="200" y="649"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -701,7 +705,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <table name="schedules">
 	<schema name="core"/>
-	<position x="600" y="1050"/>
+	<position x="600" y="1049"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
@@ -792,7 +796,7 @@ insert into clinics(name) values('abc');]]></appended-sql>
 	 dst-table="core.contacts"
 	 src-required="false" dst-required="false"
 	upd-action="NO ACTION"
-	del-action="NO ACTION"/>
+	del-action="CASCADE"/>
 
 <relationship name="staff_has_many_contacts" type="rel1n"
 	 src-col-pattern="{st}_{sc}"
@@ -807,6 +811,11 @@ insert into clinics(name) values('abc');]]></appended-sql>
 
 <permission>
 	<object name="core" type="schema"/>
+	<roles names="clinics_web"/>
+	<privileges usage="true"/>
+</permission>
+<permission>
+	<object name="security" type="schema"/>
 	<roles names="clinics_web"/>
 	<privileges usage="true"/>
 </permission>

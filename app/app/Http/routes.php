@@ -33,4 +33,11 @@ Route::delete('/patient/{patient}', 'PatientController@destory');
 
 Route::get('/patient/{patient}/contacts', 'ContactController@index');
 Route::post('patient/{patient}/contact', 'ContactController@store');
-Route::delete('patient/{patient}/contact/{contact}', 'ContactController@destory');
+Route::delete('/contact/{contact}', 'ContactController@destory');
+
+Route::get('/staff', 'StaffController@index');
+Route::post('/staff', 'StaffController@store');
+Route::delete('/staff/{staff}', 'StaffController@destory');
+
+Route::get('/staff/{staff}/contacts', 'ContactController@index');
+Route::post('/staff/{staff}/contact', 'ContactController@store');

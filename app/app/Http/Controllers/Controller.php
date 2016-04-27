@@ -13,9 +13,11 @@ class Controller extends BaseController
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
 
     protected $clinic_id;
+    protected $user_id;
 
     public function __construct()
     {
         $this->clinic_id = session("clinic-id");
+        $this->user_id = 1;
     }
 }

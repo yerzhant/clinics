@@ -55,11 +55,11 @@ class PatientController extends Controller
         return back();
     }
 
-    public function destory(Request $request, Medicine $medicine)
+    public function destory(Request $request, Patient $patient)
     {
         // TODO add authorization
 
-        $medicine->delete();
+        $patient->delete();
 
         return back();
     }

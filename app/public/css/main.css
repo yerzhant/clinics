@@ -7,7 +7,7 @@ td {
 }
 
 td.command {
-    width: 0;
+    width: 1px;
 }
 
 .checkboxes div {
