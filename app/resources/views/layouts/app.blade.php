@@ -20,7 +20,7 @@
                             <a href="#"><i class="fa fa-bars"></i></a>
                     </li>
 
-                    <li class="w3-opennav"><a href="#"><i class="fa fa-home"></i></a></li>
+                    <li class="w3-opennav"><a href="/"><i class="fa fa-home"></i></a></li>
 
                     <li class="w3-hide-small"><a href="/staff"><i class="fa fa-user-md"></i> Сотрудники</a></li>
 

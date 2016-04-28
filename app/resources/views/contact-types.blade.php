@@ -34,9 +34,7 @@
         <table class="w3-table w3-striped w3-hoverable">
             @foreach($contactTypes as $contactType)
                 <tr>
-                    <td>
-                        {{ $contactType->name }}
-                    </td>
+                    <td>{{ $contactType->name }}</td>
 
                     <td class="command">
                         <button class="w3-btn w3-round w3-ripple w3-theme w3-hover-green" title="Изменить"
@@ -48,13 +46,13 @@
 
                     <td class="command">
                         <section id="deleteModal{{ $contactType->id }}" class="w3-modal">
-                            <section class="w3-modal-content w3-card-8 w3-animate-zoom">
+                            <section class="w3-modal-content w3-card-8 w3-round-large w3-animate-zoom">
                                 <header class="w3-container w3-theme">
                                     <span class="w3-closebtn" onclick="$('#deleteModal{{ $contactType->id }}').css('display', 'none')">&times;</span>
-                                    <h3>Предупреждение</h3>
+                                    <h6>Предупреждение</h6>
                                 </header>
 
-                                <form class="w3-container w3-pale-red" action="/contact-type/{{ $contactType->id }}" method="post">
+                                <form class="w3-container w3-round-large w3-pale-red" action="/contact-type/{{ $contactType->id }}" method="post">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
 

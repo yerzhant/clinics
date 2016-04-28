@@ -46,3 +46,7 @@ Route::delete('/contact/{contact}', 'ContactController@destory');
 Route::get('/staff/{staff}/services', 'ServiceController@index');
 Route::post('/staff/{staff}/service', 'ServiceController@store');
 Route::delete('/service/{service}', 'ServiceController@destory');
+
+Route::get('/staff/{staff}/work-times', 'WorkTimeController@index');
+Route::post('/staff/{staff}/work-time', 'WorkTimeController@store');
+Route::delete('/work-time/{workTime}', 'WorkTimeController@destory');

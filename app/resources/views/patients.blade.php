@@ -6,13 +6,13 @@
 
 @section('content')
     <section id="modal" class="w3-modal">
-        <section class="w3-modal-content w3-card-8 w3-animate-zoom">
+        <section class="w3-modal-content w3-card-8 w3-round-large w3-animate-zoom">
             <header class="w3-container w3-theme">
                 <span class="w3-closebtn" onclick="$('#modal').css('display', 'none')">&times;</span>
-                <h3>Пациент</h3>
+                <h6>Пациент</h6>
             </header>
 
-            <form class="w3-container" action="patient" method="post">
+            <form class="w3-container w3-round-large" action="patient" method="post">
                 {!! csrf_field() !!}
 
                 <input id="id" type="hidden" name="id" value="">
@@ -74,7 +74,7 @@
 
     <section class="w3-row w3-margin-top data">
         <a class="w3-btn-floating w3-theme w3-hover-green"
-            onclick="$('#modal').css('display', 'block')">
+            onclick="$('#modal').css('display', 'block')" title="Создать">
             <i class="fa fa-plus"></i>
         </a>
 
@@ -122,13 +122,13 @@
 
                     <td class="command">
                         <section id="deleteModal{{ $patient->id }}" class="w3-modal">
-                            <section class="w3-modal-content w3-card-8 w3-animate-zoom">
+                            <section class="w3-modal-content w3-card-8 w3-round-large w3-animate-zoom">
                                 <header class="w3-container w3-theme">
                                     <span class="w3-closebtn" onclick="$('#deleteModal{{ $patient->id }}').css('display', 'none')">&times;</span>
-                                    <h3>Предупреждение</h3>
+                                    <h6>Предупреждение</h6>
                                 </header>
 
-                                <form class="w3-container w3-pale-red" action="/patient/{{ $patient->id }}" method="post">
+                                <form class="w3-container w3-round-large w3-pale-red" action="/patient/{{ $patient->id }}" method="post">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
 

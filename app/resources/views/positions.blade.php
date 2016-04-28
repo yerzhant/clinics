@@ -55,27 +55,15 @@
     <section class="w3-row w3-margin-top">
         <table class="w3-table w3-striped w3-hoverable">
             <tr class="w3-theme-l2">
-                <th>
-                    Наименование
-                </th>
-                <th>
-                    Роли
-                </th>
-                <th>
-
-                </th>
-                <th>
-
-                </th>
+                <th>Наименование</th>
+                <th>Роли</th>
+                <th></th>
+                <th></th>
             </tr>
             @foreach($positions as $position)
                 <tr>
-                    <td>
-                        {{ $position->name }}
-                    </td>
-                    <td>
-                        {{ $position->roles_as_string }}
-                    </td>
+                    <td>{{ $position->name }}</td>
+                    <td>{{ $position->roles_as_string }}</td>
 
                     <td class="command">
                         <button class="w3-btn w3-round w3-ripple w3-theme w3-hover-green" title="Изменить"
@@ -91,13 +79,13 @@
 
                     <td class="command">
                         <section id="deleteModal{{ $position->id }}" class="w3-modal">
-                            <section class="w3-modal-content w3-card-8 w3-animate-zoom">
+                            <section class="w3-modal-content w3-card-8 w3-round-large w3-animate-zoom">
                                 <header class="w3-container w3-theme">
                                     <span class="w3-closebtn" onclick="$('#deleteModal{{ $position->id }}').css('display', 'none')">&times;</span>
-                                    <h3>Предупреждение</h3>
+                                    <h6>Предупреждение</h6>
                                 </header>
 
-                                <form class="w3-container w3-pale-red" action="/position/{{ $position->id }}" method="post">
+                                <form class="w3-container w3-round-large w3-pale-red" action="/position/{{ $position->id }}" method="post">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
 

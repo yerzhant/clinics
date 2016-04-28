@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.8.1" last-position="0,295" last-zoom="1"
+<dbmodel pgmodeler-ver="0.8.1" last-position="0,294" last-zoom="1"
 	 default-owner="postgres">
 <role name="clinics_web"
       login="true"
@@ -398,7 +398,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 		<type name="text"/>
 	</column>
 	<column name="doc_type">
-		<type name="core.doc_type" precision="32624"/>
+		<type name="core.doc_type" precision="32615"/>
 	</column>
 	<constraint name="pk_patients" type="pk-constr" table="core.patients">
 		<columns names="id" ref-type="src-columns"/>
@@ -508,7 +508,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 
 <table name="visits">
 	<schema name="core"/>
-	<position x="750" y="749"/>
+	<position x="750" y="742"/>
 	<column name="assigned_on" not-null="true">
 		<type name="timestamp"/>
 	</column>
@@ -662,7 +662,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 		<type name="text"/>
 	</column>
 	<column name="roles" not-null="true">
-		<type name="core.role" dimension="1" precision="32624"/>
+		<type name="core.role" dimension="1" precision="32615"/>
 	</column>
 	<constraint name="pk_positions" type="pk-constr" table="core.positions">
 		<columns names="id" ref-type="src-columns"/>
@@ -703,14 +703,14 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	<columns names="name,clinic_id" ref-type="src-columns"/>
 </constraint>
 
-<table name="schedules">
+<table name="work_times">
 	<schema name="core"/>
-	<position x="600" y="1049"/>
+	<position x="598" y="1048"/>
 	<column name="id" not-null="true">
 		<type name="serial"/>
 	</column>
 	<column name="day" not-null="true">
-		<type name="core.week_day" precision="32624"/>
+		<type name="core.week_day" precision="32615"/>
 	</column>
 	<column name="from_time">
 		<type name="time"/>
@@ -718,10 +718,10 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	<column name="to_time">
 		<type name="time"/>
 	</column>
-	<constraint name="pk_schedules" type="pk-constr" table="core.schedules">
+	<constraint name="pk_work_times" type="pk-constr" table="core.work_times">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="ck_schedules_from_to" type="ck-constr" table="core.schedules">
+	<constraint name="ck_work_times_from_to" type="ck-constr" table="core.work_times">
 			<expression><![CDATA[from_time < to_time]]></expression>
 	</constraint>
 
@@ -730,7 +730,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="fk_schedules_staff" index="0"/>
+		<object name="fk_work_times_staff" index="2"/>
 	</customidxs>
 </table>
 
@@ -740,7 +740,7 @@ insert into users(email,  password) values('aaa', 'xxx');]]></appended-sql>
 	 src-fk-pattern="fk_{dt}_{st}"
 	 custom-color="#aa55ff"
 	 src-table="core.staff"
-	 dst-table="core.schedules"
+	 dst-table="core.work_times"
 	 src-required="true" dst-required="false"
 	upd-action="NO ACTION"
 	del-action="CASCADE"/>
