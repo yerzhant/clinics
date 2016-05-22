@@ -2,6 +2,11 @@
 
 @section('header')
     Контакты
+
+    <a href="{{ session()->get('prev-path') }}"
+        class="w3-btn-floating w3-ripple w3-theme-l2 w3-hover-blue header-down-btn-1">
+        <i class="fa fa-arrow-left"></i> Назад
+    </a>
 @endsection
 
 @section('content')
@@ -36,16 +41,12 @@
                         onclick="$('#id').val('')">
                     <i class="fa fa-ban"></i> Отменить
                 </button>
-
-                <a href="{{ session()->get('prev-path') }}" class="w3-btn w3-round w3-ripple w3-theme w3-hover-blue">
-                    <i class="fa fa-arrow-left"></i> Назад
-                </a>
             </section>
         </form>
     </section>
 
     <section class="w3-row">
-        <h3>{{ $entity->last_name }} {{ $entity->first_name }} {{ $entity->surname }}</h3>
+        <h5>{{ $entity->last_name }} {{ $entity->first_name }} {{ $entity->surname }}</h5>
         <table class="w3-table w3-striped w3-hoverable">
             <tr class="w3-theme-l2">
                 <th>Тип</th>

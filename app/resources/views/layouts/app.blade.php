@@ -50,7 +50,7 @@
 
         <main class="w3-padding">
             <section class="w3-card-4 w3-round-large">
-                <header class="w3-container w3-theme">
+                <header class="w3-container w3-theme relative">
                     <h4>@yield('header')</h4>
                 </header>
 

@@ -30,18 +30,20 @@ class PatientController extends Controller
             'doc_type' => 'required_with:doc_number',
         ]);
 
-        $this->validate($request, [
-            'doc_number' => 'unique:patients,doc_number,null,id,' .
-                          'doc_type,' . $request->doc_type . ',' .
-                          'clinic_id,' . $this->clinic_id,
-        ]);
-
         if ($request->id == "") {
             $patient = new Patient;
             $patient->clinic_id = $this->clinic_id;
+            $patientId = 'null';
         } else {
             $patient = Patient::find($request->id);
+            $patientId = $patient->id;
         }
+
+        $this->validate($request, [
+            'doc_number' => 'unique:patients,doc_number,' . $patientId . ',id,' .
+                            'doc_type,' . $request->doc_type . ',' .
+                            'clinic_id,' . $this->clinic_id,
+        ]);
 
         $patient->last_name = $request->last_name;
         $patient->first_name = $request->first_name;

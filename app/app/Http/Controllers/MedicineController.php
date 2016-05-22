@@ -23,17 +23,20 @@ class MedicineController extends Controller
     {
         // TODO to be added an authorization
 
-        $this->validate($request, [
-            'name' => 'required|unique:medicines,name,null,id,clinic_id,' . $this->clinic_id,
-            'price' => 'numeric',
-        ]);
-
         if ($request->id == "") {
             $medicine = new Medicine;
             $medicine->clinic_id = $this->clinic_id;
+            $medicineId = 'null';
         } else {
             $medicine = Medicine::find($request->id);
+            $medicineId = $medicine->id;
         }
+
+        $this->validate($request, [
+            'name' => 'required|unique:medicines,name,' . $medicineId .
+                      ',id,clinic_id,' . $this->clinic_id,
+            'price' => 'numeric',
+        ]);
 
         $medicine->name = $request->name;
         $medicine->price = $request->price ?: null;

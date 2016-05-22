@@ -31,6 +31,14 @@ class StaffController extends Controller
     {
         // TODO to be added an authorization
 
+        $this->validate($request, [
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'position' => 'required|exists:positions,id,clinic_id,' . $this->clinic_id,
+            'email' => "required|email",
+            'password' => 'confirmed',
+        ]);
+
         if ($request->id == "") {
             $staff = new Staff;
             $staff->clinic_id = $this->clinic_id;
@@ -39,14 +47,6 @@ class StaffController extends Controller
             $staff = Staff::find($request->id);
             $user_id = $staff->user_id;
         }
-
-        $this->validate($request, [
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'position' => 'required|exists:positions,id,clinic_id,' . $this->clinic_id,
-            'email' => "required|email",
-            'password' => 'confirmed',
-        ]);
 
         if (DB::select("select count(*) from security.users where id <> ? and email = ?",
                                [$user_id, $request->email])[0]->count > 0) {

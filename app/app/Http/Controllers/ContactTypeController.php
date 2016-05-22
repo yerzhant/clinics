@@ -25,16 +25,19 @@ class ContactTypeController extends Controller
     {
         // TODO to be added an authorization
 
-        $this->validate($request, [
-            'name' => 'required|unique:contact_types,name,null,id,is_billing,false,clinic_id,' . $this->clinic_id,
-        ]);
-
         if ($request->id == "") {
             $contactType = new ContactType;
             $contactType->clinic_id = $this->clinic_id;
+            $contactTypeId = 'null';
         } else {
             $contactType = ContactType::find($request->id);
+            $contactTypeId = $contactType->id;
         }
+
+        $this->validate($request, [
+            'name' => 'required|unique:contact_types,name,' . $contactTypeId .
+                      ',id,is_billing,false,clinic_id,' . $this->clinic_id,
+        ]);
 
         $contactType->name = $request->name;
         $contactType->save();

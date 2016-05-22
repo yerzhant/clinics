@@ -1,10 +1,10 @@
+main {
+    margin-top: 50px;
+}
+
 section header {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
-}
-
-main {
-    margin-top: 50px;
 }
 
 td {
@@ -19,12 +19,24 @@ td.command {
     float: left;
 }
 
-.data {
+.relative {
     position: relative;
 }
 
-.w3-btn-floating {
+.header-up-btn-1 {
     position: absolute;
     top: -20px;
     right: 10px;
+}
+
+.header-down-btn-1 {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+}
+
+.header-down-btn-2 {
+    position: absolute;
+    top: 30px;
+    right: 70px;
 }

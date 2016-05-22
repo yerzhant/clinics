@@ -23,20 +23,23 @@ class PositionController extends Controller
     {
         // TODO to be added an authorization
 
+        if ($request->id == "") {
+            $position = new Position;
+            $position->clinic_id = $this->clinic_id;
+            $positionId = 'null';
+        } else {
+            $position = Position::find($request->id);
+            $positionId = $position->id;
+        }
+
         $this->validate($request, [
-            'name' => 'required|unique:positions,name,null,id,clinic_id,' . $this->clinic_id,
+            'name' => 'required|unique:positions,name,' . $positionId .
+                      ',id,clinic_id,' . $this->clinic_id,
             'admin' => 'required_without_all:doctor,accountant,receptionist',
             'doctor' => 'required_without_all:admin,accountant,receptionist',
             'accountant' => 'required_without_all:admin,doctor,receptionist',
             'receptionist' => 'required_without_all:admin,doctor,accountant',
         ]);
-
-        if ($request->id == "") {
-            $position = new Position;
-            $position->clinic_id = $this->clinic_id;
-        } else {
-            $position = Position::find($request->id);
-        }
 
         $position->name = $request->name;
 

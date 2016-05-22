@@ -28,4 +28,9 @@ class Staff extends Model
     {
         return $this->hasMany('App\WorkTime');
     }
+
+    public function visits()
+    {
+        return $this->hasMany('App\Visit');
+    }
 }

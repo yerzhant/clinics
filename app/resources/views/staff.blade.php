@@ -78,8 +78,8 @@
         </section>
     </section>
 
-    <section class="w3-row w3-margin-top data">
-        <a class="w3-btn-floating w3-theme w3-hover-green"
+    <section class="w3-row w3-margin-top relative">
+        <a class="w3-btn-floating w3-theme w3-hover-green header-up-btn-1"
             onclick="$('#modal').css('display', 'block')" title="Создать">
             <i class="fa fa-plus"></i>
         </a>
@@ -107,7 +107,7 @@
                     <td>{{ $s->user->email }}</td>
 
                     <td class="command">
-                        <a href="/staff/{{ $s->id }}/vistis" class="w3-btn w3-round w3-ripple w3-theme w3-hover-blue" title="Посещения">
+                        <a href="/staff/{{ $s->id }}/visits" class="w3-btn w3-round w3-ripple w3-theme w3-hover-blue" title="Посещения">
                             <i class="fa fa-list"></i>
                         </a>
                     </td>

@@ -72,8 +72,8 @@
         </section>
     </section>
 
-    <section class="w3-row w3-margin-top data">
-        <a class="w3-btn-floating w3-theme w3-hover-green"
+    <section class="w3-row w3-margin-top relative">
+        <a class="w3-btn-floating w3-theme w3-hover-green header-up-btn-1"
             onclick="$('#modal').css('display', 'block')" title="Создать">
             <i class="fa fa-plus"></i>
         </a>
